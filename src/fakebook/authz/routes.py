@@ -1,4 +1,4 @@
-from fakebook.authz.tokens import generateToken
+from fakebook.authz.tokens import generate_token
 from fakebook.database import User, mysql
 from flask import Blueprint, jsonify, render_template, request
 
@@ -55,7 +55,7 @@ def login_user():
         if ((not user) or (not user.check_password(data['password']))):
             return jsonify({'message': 'Invalid credentials'}), 401
         
-        return jsonify({'token': generateToken(user)})
+        return jsonify({'token': generate_token(user)})
 
     # Other methods
     else:

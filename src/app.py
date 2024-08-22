@@ -1,4 +1,5 @@
 from fakebook.authz.routes import authz_bp
+from fakebook.authz.tokens import token_required
 from fakebook.database import mysql
 from fakebook.config import Config
 from flask import Flask, render_template
@@ -6,6 +7,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/')
+@token_required
 def home():
     return render_template('index.html', posts=None)
 

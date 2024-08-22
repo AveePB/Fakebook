@@ -1,8 +1,8 @@
-from fakebook.database import User
+from fakebook.database import User, Token, mysql
 from fakebook.config import Config
 from functools import wraps
 from flask import request, jsonify
-from datetime import datetime, timedelta, timezone, UTC
+from datetime import datetime, timedelta, timezone
 import jwt
 
 # Authenticates tokens
@@ -21,7 +21,6 @@ def token_required(f):
         try:
             # Decode the token
             data = jwt.decode(token, Config.SECRET_KEY, algorithms=['HS256'])
-            current_user = User.query.get(data['user_id'])
 
             # Check for expiration time
             exp = data.get('exp')
@@ -41,15 +40,35 @@ def token_required(f):
             return jsonify({'message': 'Invalid token!'}), 403
         except Exception as e:
             return jsonify({'message': str(e)}), 403
+        
+        # Verify if token exists
+        token_record = Token.query.filter_by(raw_form=token).first()
+        if (not token_record):
+            return jsonify({'message': 'Token is not found in the database!'})
 
-        return f(current_user, *args, **kwargs)
+        return f(*args, **kwargs)
 
     return decorated
 
 # Creates tokens
-def generateToken(user):
-    return jwt.encode({
-            'user_id': user.id,
-            'exp': datetime.now(UTC) + timedelta(minutes=Config.TOKEN_LIFESPAN)
-        }, Config.SECRET_KEY, algorithm='HS256')
+def generate_token(user):
+    # Generate the JWT token
+    token = jwt.encode({
+        'user_id': user.id,
+        'exp': datetime.now(timezone.utc) + timedelta(minutes=Config.TOKEN_LIFESPAN)
+    }, Config.SECRET_KEY, algorithm='HS256')
 
+    # Check if a token already exists for the user
+    token_record = Token.query.filter_by(id=user.id).first()
+
+    if (token_record):
+        # Update the existing token record
+        token_record.raw_form = token
+    else:
+        # Create a new token record
+        mysql.session.add(Token(id=user.id, raw_form=token))
+
+    # Commit the changes to the database
+    mysql.session.commit()
+    
+    return token
