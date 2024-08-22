@@ -1,13 +1,24 @@
-from flask import Flask
-from fakebook.routes import fb_endpoints
+from fakebook.authz.routes import authz_bp
+from fakebook.database import mysql
+from fakebook.config import Config
+from flask import Flask, render_template
 
-def init_app():
-    app = Flask(__name__)
-    
-    app.register_blueprint(fb_endpoints)
+app = Flask(__name__)
 
-    return app
+@app.route('/')
+def home():
+    return render_template('index.html', posts=None)
 
 if (__name__ == '__main__'):
-    app = init_app()
+    # Update constants 
+    app.config.from_object(Config)
+
+    #Pin database & blueprints
+    mysql.init_app(app)
+    app.register_blueprint(authz_bp)
+    
+    # Create tables
+    with app.app_context():
+        mysql.create_all()
+    
     app.run()
