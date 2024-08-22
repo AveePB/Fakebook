@@ -33,7 +33,7 @@ def signup_user():
     
     # Other methods
     else:
-        return jsonify({'error': 'Not Found 404'}), 404 
+        return jsonify({'message': 'Not Found 404'}), 404 
 
 
 @authz_bp.route('/authz/login', methods=['GET', 'POST'])

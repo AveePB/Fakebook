@@ -6,7 +6,9 @@
 {% block body %}
 <div class="auth-container">
     <h1>Log Into Fakebook</h1>
-    <form action="/authz/login" method="post">
+
+    <!-- Log in form -->
+    <form action="/authz/login" method="post" id="login-form">
         <div class="form-group">
             <label for="username">Username or Email:</label>
             <input type="text" id="username" name="username" required>
@@ -17,8 +19,21 @@
         </div>
         <button type="submit">Log In</button>
     </form>
+
+    <!-- Error box -->
+    <div id="error-box" class="error-box" style="display:none;"></div>
+    
+    <!-- Sign up footer -->
     <div class="auth-footer">
         <p>Don't have an account? <a href="/authz/signup">Sign up here</a></p>
     </div>
 </div>
+
+<script>
+    function handleUserLogIn(event) { 
+        event.preventDefault();
+    }
+
+    document.getElementById("login-form").addEventListener("submit", handleUserLogIn);
+</script>
 {% endblock %}
