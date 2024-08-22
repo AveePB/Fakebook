@@ -8,7 +8,7 @@ authz_bp = Blueprint('authz_bp', __name__)
 def signup_user():
     # GET method
     if (request.method == 'GET'):
-        return render_template('authz.html', option='Sign Up')
+        return render_template('signup.html')
     
     # POST method
     elif (request.method == 'POST'):
@@ -40,7 +40,7 @@ def signup_user():
 def login_user():
     # GET method
     if (request.method == 'GET'):
-        return render_template('authz.html', option='Log In')
+        return render_template('login.html')
     
     # POST method
     elif (request.method == 'POST'):

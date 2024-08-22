@@ -1,7 +1,7 @@
-from fakebook.database import User, Token, mysql
+from fakebook.database import Token, mysql
 from fakebook.config import Config
 from functools import wraps
-from flask import request, jsonify
+from flask import redirect, request
 from datetime import datetime, timedelta, timezone
 import jwt
 
@@ -16,7 +16,7 @@ def token_required(f):
             token = request.headers['Authorization'].split(" ")[1]
 
         if (not token):
-            return jsonify({'message': 'Token is missing!'}), 403
+            return redirect('/authz/login')
 
         try:
             # Decode the token
@@ -25,26 +25,27 @@ def token_required(f):
             # Check for expiration time
             exp = data.get('exp')
             if (not exp):
-                return jsonify({'message': 'No expiration date in token!'}), 403
+                return redirect('/authz/login')
 
             # Convert expiration time to a timezone-aware datetime object
             exp_date = datetime.fromtimestamp(exp, tz=timezone.utc)
 
             # Compare expiration time with the current UTC time
             if (exp_date < datetime.now(tz=timezone.utc)):
-                return jsonify({'message': 'Token has expired!'}), 403
+                return redirect('/authz/login')
+
 
         except jwt.ExpiredSignatureError:
-            return jsonify({'message': 'Token has expired!'}), 403
+            return redirect('/authz/login')
         except jwt.InvalidTokenError:
-            return jsonify({'message': 'Invalid token!'}), 403
+            return redirect('/authz/login')
         except Exception as e:
-            return jsonify({'message': str(e)}), 403
+            return redirect('/authz/login')
         
         # Verify if token exists
         token_record = Token.query.filter_by(raw_form=token).first()
         if (not token_record):
-            return jsonify({'message': 'Token is not found in the database!'})
+            return redirect('/authz/login')
 
         return f(*args, **kwargs)
 
