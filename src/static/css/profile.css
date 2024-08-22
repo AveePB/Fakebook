@@ -1,0 +1,89 @@
+/* Profile Page Styling */
+.profile {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    background-color: #1a1a1a;
+    border-radius: 5px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #d32f2f;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #d32f2f;
+    margin-right: 20px;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.profile-header h1 {
+    margin: 0;
+    color: #ff5252;
+}
+
+.bio {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.message-btn {
+    background-color: #d32f2f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.message-btn:hover {
+    background-color: #ff5252;
+}
+
+.expand-btn {
+    background-color: #d32f2f;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.expand-btn:hover {
+    background-color: #ff5252;
+}
+
+.followers-list {
+    display: none; /* Initially hidden */
+    background-color: #1a1a1a;
+    padding: 15px;
+    border: 1px solid #d32f2f;
+    border-radius: 5px;
+}
+
+.followers-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.followers-list li {
+    color: #ffffff;
+    margin-bottom: 10px;
+}

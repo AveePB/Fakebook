@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>{{ username }} - Fakebook Profile</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<script defer src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<!-- Profile Section -->
+<div class="profile">
+    <div class="profile-header">
+        <img src="{{ url_for('static', filename='avatars/default_avatar.png') }}" alt="Avatar" class="avatar">
+        <div class="profile-info">
+            <h1>{{ username }}</h1>
+            <p class="bio">This is the bio of {{ username }}. Write something interesting here!</p>
+        </div>
+        <button class="message-btn">Message</button>
+    </div>
+
+    <button class="expand-btn" onclick="toggleFollowers()">Followers</button>
+    <div class="followers-list" id="followersList">
+    <ul>
+        <li>Follower 1</li>
+        <li>Follower 2</li>
+        <li>Follower 3</li>
+        <!-- Add more followers as needed -->
+    </ul>
+</div>
+
+<div class="profile-posts">
+    <h2>All Posts</h2>
+    <div class="post">
+        <h3>User Post Title</h3>
+        <p>This is a sample post by {{ username }}. Here you can see all posts made by this user.</p>
+    </div>
+    <div class="post">
+        <h3>Another Post Title</h3>
+        <p>Here's another post by {{ username }}. Posts are listed in chronological order.</p>
+    </div>
+ <!-- Add more posts as needed -->    
+</div>
+{% endblock %}

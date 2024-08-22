@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block head %} {% endblock %}
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">Fakebook</div>
+        <div class="nav-links">
+            <a href="#" class="nav-btn">Home</a>
+            <a href="#" class="nav-btn">Search</a>
+            <a href="#" class="nav-btn">Profile</a>
+            <a href="#" class="nav-btn">Inbox</a>
+            <a href="#" class="nav-btn">Settings</a>
+        </div>
+    </div>
+
+    {% block body %} {% endblock %}
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Fakebook. All rights reserved.</p>
+    </div>
+</body>
+</html>
