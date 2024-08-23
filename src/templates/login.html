@@ -32,8 +32,50 @@
 <script>
     function handleUserLogIn(event) { 
         event.preventDefault();
+
+        // Extract required info
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var data = { username: username, password: password };
+
+        // Clear previous errors
+        var errorBox = document.getElementById("error-box");
+        errorBox.style.display = "none";
+        errorBox.innerHTML = "";
+
+        // Send request
+        fetch('/authz/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+
+            if (response.ok)
+                // Redirect to home page
+                window.location.href = '/';
+            else 
+                // Handle errors
+                return response.json();
+        })
+        .then(data => {
+            if (data && data.message) {
+                // Display the error message in the error box
+                errorBox.style.display = "block";
+                errorBox.innerHTML = data.message;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+
+            // Handle network or other unexpected errors
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "An unexpected error occurred. Please try again.";
+        });
     }
 
-    document.getElementById("login-form").addEventListener("submit", handleUserLogIn);
+    document.getElementById("login-form").addEventListener("submit", handleUserLogIn); 
 </script>
 {% endblock %}
