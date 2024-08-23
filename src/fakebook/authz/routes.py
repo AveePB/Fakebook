@@ -1,6 +1,7 @@
 from fakebook.authz.tokens import generate_token
 from fakebook.database import User, mysql
-from flask import Blueprint, jsonify, render_template, request
+from fakebook.config import Config
+from flask import Blueprint, jsonify, make_response, render_template, request
 
 authz_bp = Blueprint('authz_bp', __name__)
 
@@ -54,9 +55,13 @@ def login_user():
         user = User.query.filter_by(nickname=data['username']).first()
         if ((not user) or (not user.check_password(data['password']))):
             return jsonify({'message': 'Invalid credentials'}), 401
+        token = generate_token(user)
         
-        return jsonify({'token': generate_token(user)})
-
+        response = make_response(jsonify({'message': 'Logged in successfully'}))
+        response.set_cookie('jwt', token, max_age=Config.TOKEN_LIFESPAN, httponly=True, secure=True, )
+    
+        return response
+    
     # Other methods
     else:
-        return jsonify({'error': 'Not Found 404'}), 404 
+        return jsonify({'message': 'Not Found 404'}), 404 
