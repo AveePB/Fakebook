@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, make_response, render_template, request
 
 authz_bp = Blueprint('authz_bp', __name__)
 
+# Register new users
 @authz_bp.route('/authz/signup', methods=['GET', 'POST'])
 def signup_user():
     # GET method
@@ -36,7 +37,7 @@ def signup_user():
     else:
         return jsonify({'message': 'Not Found 404'}), 404 
 
-
+# Authenticates users
 @authz_bp.route('/authz/login', methods=['GET', 'POST'])
 def login_user():
     # GET method

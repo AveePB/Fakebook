@@ -38,6 +38,12 @@ def validate_cookies() -> bool:
 
     return True
 
+# Retrieves user id
+def get_user_id(token) -> int:
+    if (not token): return None
+
+    data = jwt.decode(token, Config.SECRET_KEY, algorithms=['HS256'])
+    return data.get('user_id')
 
 # Creates tokens
 def generate_token(user):
