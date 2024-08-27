@@ -1,3 +1,4 @@
+from fakebook.authz.criteria import validateUsername, validatePassword, USERNAME_CRITERIA, PASSWORD_CRITERIA
 from fakebook.authz.tokens import generate_token
 from fakebook.database import User, mysql
 from fakebook.config import Config
@@ -25,6 +26,13 @@ def signup_user():
         if (user):
             return jsonify({'message': 'User already exists'}), 409
         
+        # Validate username & password
+        if (not validateUsername(data['username'])):
+            return jsonify({'message': USERNAME_CRITERIA}), 400
+        
+        if (not validatePassword(data['password'])):
+            return jsonify({'message': PASSWORD_CRITERIA}), 400
+
         # Create new user
         new_user = User(nickname=data['username'])
         new_user.set_password(data['password'])
