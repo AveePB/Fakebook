@@ -9,6 +9,8 @@ class User(mysql.Model):
     id = mysql.Column(mysql.Integer, primary_key=True)
     nickname = mysql.Column(mysql.String(128), unique=True, nullable=False)
     password_hash = mysql.Column(mysql.String(256), nullable=False)
+    avatar_filename = mysql.Column(mysql.String(256), nullable=True)
+    bio = mysql.Column(mysql.String(512), nullable=True)
 
     def set_password(self, password) -> None:
         self.password_hash = generate_password_hash(password)
