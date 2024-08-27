@@ -1,16 +1,14 @@
-from fakebook.authz.tokens import get_user_id, validate_cookies
+from fakebook.authz.tokens import get_user_id, token_required
 from fakebook.database import User
-from fakebook.profile.handler import get_bio, get_enemies
+from fakebook.profile.userservice import get_bio, get_enemies
 from flask import Blueprint, jsonify, url_for, send_from_directory, redirect, render_template, request
 
 profile_bp = Blueprint('profile_bp', __name__)
 
 # Displays profiles
 @profile_bp.route('/profile/<int:user_id>', methods=['GET'])
+@token_required
 def fetch_profile(user_id):
-    # Validate cookies
-    if (not validate_cookies()):
-        return redirect('/authz/login')
     
     # Check if user exists
     user = User.query.filter_by(id=user_id).first()
@@ -25,11 +23,8 @@ def fetch_profile(user_id):
 
 # Displays logged profile
 @profile_bp.route('/profile/me', methods=['GET'])
+@token_required
 def fetch_my_profile():
-    # Validate cookies
-    if (not validate_cookies()):
-        return redirect('/authz/login')
-    
     # Check if user exists
     jwt = request.cookies.get('jwt')
     user = User.query.filter_by(id=get_user_id(jwt)).first()
