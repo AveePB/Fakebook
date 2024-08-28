@@ -29,3 +29,14 @@ class Token(mysql.Model):
 
     def __repr__(self) -> str:
         return f'<Token {self.raw_form}>'
+    
+class Enemy(mysql.Model):
+    __tablename__ = 'enemies'
+
+    id = mysql.Column(mysql.Integer, primary_key=True)
+    user1_id = mysql.Column(mysql.Integer, mysql.ForeignKey('users.id'), nullable=False)
+    user2_id = mysql.Column(mysql.Integer, mysql.ForeignKey('users.id'), nullable=False)
+
+    def __repr__(self) -> str:
+        return f'<Enemy {self.user1_id} & {self.user2_id}>'
+    

@@ -93,3 +93,27 @@ body, html {
     margin-bottom: 8px;
     border-radius: 4px;
 }
+
+/* Remove underline from the link */
+.enemy-link {
+    text-decoration: none; /* This removes the underline */
+    color: #ffffff; /* Default text color */
+    display: block; /* Make the link cover the entire list item */
+}
+
+/* Styling the list item */
+.enemy-item {
+    padding: 10px; /* Add some padding for better spacing */
+    background-color: #1a1a1a; /* Match the background color */
+    border: 1px solid #d32f2f; /* Add a border with your red theme */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+    list-style: none; /* Remove default list styling */
+}
+
+/* Hover effect */
+.enemy-link:hover .enemy-item {
+    background-color: #333333; /* Darker background on hover */
+    border-color: #ff5252; /* Change border color on hover */
+    color: #ff5252; /* Change text color on hover */
+}

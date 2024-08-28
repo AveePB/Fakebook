@@ -20,7 +20,9 @@
             <h2>Enemies</h2>
             <ul>
                 {% for enemy in enemies %}
-                <li>{{ enemy }}</li>
+                <a href="/profile/{{ enemy.id }}" class="enemy-link">
+                    <li class="enemy-item">{{ enemy.nickname }}</li>
+                </a>
                 {% endfor %}
             </ul>
         </div>
