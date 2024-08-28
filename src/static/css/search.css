@@ -1,0 +1,61 @@
+/* Community Header Styling */
+.community-header {
+    text-align: center;
+    margin-top: 20px; /* Adds some space from the top of the page */
+    margin-bottom: 20px; /* Adds space between the header and search bar */
+}
+
+.community-header h1 {
+    font-size: 36px;
+    color: #d32f2f;
+    margin: 0; /* Removes default margin */
+}
+
+
+/* Search Bar Styling */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #d32f2f;
+    border-radius: 5px 0 0 5px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    outline: none;
+    transition: width 0.4s ease-in-out;
+}
+
+.search-input::placeholder {
+    color: #b3b3b3;
+}
+
+.search-input:focus {
+    width: 400px;
+    border-color: #ff5252;
+}
+
+.search-btn {
+    padding: 10px 20px;
+    background-color: #d32f2f;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #ff5252;
+}
+
+/* Search Results Styling */
+.search-results {
+    padding: 20px;
+}
