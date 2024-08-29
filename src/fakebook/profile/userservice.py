@@ -42,3 +42,7 @@ def get_enemies(user_id):
             enemies.append(enemy)
 
     return enemies
+
+# Returns all profiles that contain the pattern
+def get_suggestions(pattern):
+    return User.query.filter(User.nickname.ilike(f'%{pattern}%')).all()

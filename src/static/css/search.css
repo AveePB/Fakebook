@@ -1,28 +1,30 @@
 /* Community Header Styling */
 .community-header {
     text-align: center;
-    margin-top: 20px; /* Adds some space from the top of the page */
-    margin-bottom: 20px; /* Adds space between the header and search bar */
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .community-header h1 {
     font-size: 36px;
     color: #d32f2f;
-    margin: 0; /* Removes default margin */
+    margin: 0;
 }
-
 
 /* Search Bar Styling */
 .search-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column; /* Stack the search bar and suggestions vertically */
+    position: relative; /* Important for the suggestions box to be positioned correctly */
     padding: 10px 20px;
     margin: 0 auto;
+    width: 400px; /* Set a fixed width for the container */
 }
 
 .search-input {
-    width: 300px;
+    width: 100%; /* Input should take full width of the container */
     padding: 10px;
     border: 1px solid #d32f2f;
     border-radius: 5px 0 0 5px;
@@ -37,8 +39,12 @@
 }
 
 .search-input:focus {
-    width: 400px;
     border-color: #ff5252;
+}
+
+.search-container form {
+    display: flex;
+    width: 100%; /* Form should take full width of the container */
 }
 
 .search-btn {
@@ -55,7 +61,28 @@
     background-color: #ff5252;
 }
 
-/* Search Results Styling */
-.search-results {
-    padding: 20px;
+/* Suggestions Box Styling */
+.suggestions-box {
+    position: absolute;
+    top: 100%; /* Position the suggestions box directly below the search bar */
+    left: 0;
+    width: 100%; /* Inherit width from the parent container */
+    background-color: #1a1a1a;
+    border: 1px solid #d32f2f;
+    border-radius: 0 0 5px 5px; /* Rounded corners at the bottom */
+    max-height: 200px;
+    overflow-y: auto;
+    display: none; /* Initially hidden */
+    z-index: 1000;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    color: #ffffff;
+    border-bottom: 1px solid #333333;
+}
+
+.suggestion-item:hover {
+    background-color: #d32f2f;
 }

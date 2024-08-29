@@ -3,14 +3,15 @@ from fakebook.authz.tokens import token_required
 from fakebook.database import mysql
 from fakebook.config import Config
 from fakebook.profile.routes import profile_bp
-from flask import Flask, redirect, render_template
+from fakebook.search.routes import search_bp
+from flask import Flask, redirect
 
 app = Flask(__name__)
 
 @app.route('/')
 @token_required
 def home():
-    return render_template('index.html', posts=None)
+    return redirect('/search')
 
 if (__name__ == '__main__'):
     # Update constants 
@@ -21,6 +22,7 @@ if (__name__ == '__main__'):
 
     app.register_blueprint(authz_bp)
     app.register_blueprint(profile_bp)
+    app.register_blueprint(search_bp)
     
     # Create tables
     with app.app_context():
