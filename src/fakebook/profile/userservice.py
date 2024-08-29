@@ -1,6 +1,15 @@
 from fakebook.database import Enemy, User
 
-# Constructs a user bio
+# Retrieves a user id
+def get_id(username):
+    # Check user 
+    user = User.query.filter_by(nickname=username).first()
+    if (user): 
+        return user.id
+    else:
+        return None
+
+# Retrieves a user bio
 def get_bio(user_id):
     # Check user id
     user = User.query.filter_by(id=user_id).first()

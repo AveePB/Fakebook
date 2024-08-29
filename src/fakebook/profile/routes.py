@@ -19,7 +19,7 @@ def fetch_profile(user_id):
         return render_template('profile.html', avatar_url=avatar_url, username=user.nickname,  
                                bio=get_bio(user.id), enemies=get_enemies(user.id))
     else:
-        return jsonify({'message': 'User not found'}), 404
+        return render_template('profile404.html')
 
 # Displays logged profile
 @profile_bp.route('/profile/me', methods=['GET'])
