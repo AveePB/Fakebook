@@ -7,7 +7,7 @@ REM Activate the virtual environment
 call env\Scripts\activate
 
 REM Run the Python script
-python src\app.py
+python .\app.py
 
 REM Pause to keep the window open
 pause

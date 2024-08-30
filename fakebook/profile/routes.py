@@ -14,7 +14,7 @@ def fetch_profile(user_id):
     user = User.query.filter_by(id=user_id).first()
     if (user):
         # Load avatar url
-        avatar_url = url_for('serve_avatar', filename=user.avatar_filename) if user.avatar_filename else url_for('static', filename='img/avatar.jpg')
+        avatar_url = url_for('profile_bp.serve_avatar', filename=user.avatar_filename) if user.avatar_filename else url_for('static', filename='img/avatar.jpg')
 
         return render_template('profile.html', avatar_url=avatar_url, username=user.nickname,  
                                bio=get_bio(user.id), enemies=get_enemies(user.id))
