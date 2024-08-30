@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+<title>Fakebook - Settings</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="settings-container">
+    <!-- Edit Profile Section -->
+    <div class="settings-section">
+        <h2>Profile</h2>
+        <form action="/settings/avatar" method="post" enctype="multipart/form-data">
+            <label for="avatar">Change Avatar</label>
+            <input type="file" id="avatar" name="avatar">
+            <button type="submit">Upload</button>
+        </form>
+        <form action="/settings/bio" method="post">
+            <label for="bio">Edit Bio</label>
+            <textarea id="bio" name="bio" rows="4" placeholder="Enter your new bio..."></textarea>
+            <button type="submit">Save Bio</button>
+        </form>
+    </div>
+
+    <!-- Data Section -->
+    <div class="settings-section">
+        <h2>Account Data</h2>
+        <form action="/settings/username" method="post">
+            <label for="username">Change Username</label>
+            <input type="text" id="username" name="username" placeholder="New username">
+            <button type="submit">Save Username</button>
+        </form>
+        <form action="/settings/password" method="post">
+            <label for="password">Change Password</label>
+            <input type="password" id="password" name="password" placeholder="New password">
+            <button type="submit">Save Password</button>
+        </form>
+    </div>
+{% endblock %}
