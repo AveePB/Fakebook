@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<title>Fakebook - {{ username }} Profile</title>
+{% endblock %}
+
+{% block body %}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="avatar">
+            <img src="{{ avatar_url }}" alt="{{ username }}'s avatar">
+        </div>
+        <div class="user-info">
+            <h1>{{ username }}</h1>
+            <p class="bio">{{ bio }}</p>
+            <button class="message-btn">Message</button>
+        </div>
+    </div>
+
+    <div class="enemies-list">
+            <h2>Enemies</h2>
+            <ul>
+                {% for enemy in enemies %}
+                <a href="/profile/{{ enemy.id }}" class="enemy-link">
+                    <li class="enemy-item">{{ enemy.nickname }}</li>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+</div>
+
+{% endblock %}
