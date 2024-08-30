@@ -65,3 +65,14 @@
 .settings-section form button:hover {
     background-color: #ff5252;
 }
+
+.error-box {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #1a1a40; /* Dark blue background */
+    color: #e0e0e0; /* Light gray font color */
+    text-align: center;
+    font-family: Arial, sans-serif; /* Optional: Change font family */
+    font-size: 14px; /* Optional: Adjust font size */
+}

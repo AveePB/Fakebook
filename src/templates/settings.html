@@ -11,30 +11,147 @@
     <!-- Edit Profile Section -->
     <div class="settings-section">
         <h2>Profile</h2>
-        <form action="/settings/avatar" method="post" enctype="multipart/form-data">
+        <form id="avatar-form" action="/settings/avatar" method="post" enctype="multipart/form-data" autocomplete="off">
             <label for="avatar">Change Avatar</label>
-            <input type="file" id="avatar" name="avatar">
+            <input type="file" accept="image/*" id="avatar" name="avatar" required>
             <button type="submit">Upload</button>
+
+            <!-- Error box -->
+            <div id="avatar-error-box" class="error-box" style="display:none;"></div>
         </form>
-        <form action="/settings/bio" method="post">
+
+        <form id="bio-form" action="/settings/bio" method="post" autocomplete="off">
             <label for="bio">Edit Bio</label>
-            <textarea id="bio" name="bio" rows="4" placeholder="Enter your new bio..." maxlength="512"></textarea>
+            <textarea id="bio" name="bio" rows="4" placeholder="Enter your new bio..." maxlength="512" required></textarea>
             <button type="submit">Save Bio</button>
+            <!-- Error box -->
+            <div id="bio-error-box" class="error-box" style="display:none;"></div>
         </form>
     </div>
 
     <!-- Data Section -->
     <div class="settings-section">
         <h2>Account Data</h2>
-        <form action="/settings/username" method="post">
+        <form id="username-form" action="/settings/username" method="post" autocomplete="off">
             <label for="username">Change Username</label>
-            <input type="text" id="username" name="username" placeholder="New username">
+            <input type="text" id="username" name="username" placeholder="New username" required>
             <button type="submit">Save Username</button>
+            <!-- Error box -->
+            <div id="username-error-box" class="error-box" style="display:none;"></div>
         </form>
-        <form action="/settings/password" method="post">
+
+        <form id="password-form" action="/settings/password" method="post" autocomplete="off">
             <label for="password">Change Password</label>
-            <input type="password" id="password" name="password" placeholder="New password">
+            <input type="password" id="password" name="password" placeholder="New password" required>
             <button type="submit">Save Password</button>
+            <!-- Error box -->
+            <div id="password-error-box" class="error-box" style="display:none;"></div>
         </form>
+        
     </div>
+
+    <script>
+        function handleTextForm(endpoint, input_id, error_box_id) {
+            // Extract info            
+            var update_value = document.getElementById(input_id).value;
+            var data = { update_value: update_value };
+
+            // Clear previous errors
+            var errorBox = document.getElementById(error_box_id);
+            errorBox.style.display = "none";
+            errorBox.innerHTML = ""; 
+
+            // Send request
+            fetch(endpoint, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok)
+                    // Clear input
+                    document.getElementById(input_id).value = "";
+                else
+                    // Handle erros
+                    return response.json();
+            })
+            .then(data => {
+                if (data && data.message) {
+                    // Display the error message in the error box
+                    errorBox.style.display = "block";
+                    errorBox.innerHTML = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+
+                // Handle network or other unexpected errors
+                 errorBox.style.display = "block";
+                errorBox.innerHTML = "An unexpected error occurred. Please try again.";
+            });
+        }
+
+        function handleImgForm(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            // Clear previous errors
+            var errorBox = document.getElementById('avatar-error-box');
+            errorBox.style.display = "none";
+            errorBox.innerHTML = ""; 
+
+            fetch('/settings/avatar', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok)
+                    // Clear input
+                    document.getElementById(input_id).value = "";
+                else
+                    // Handle errors
+                    return response.json()
+            })
+            .then(data => {
+                if (data && data.message) {
+                    // Display the error message in the error box
+                    errorBox.style.display = "block";
+                    errorBox.innerHTML = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+
+                // Handle network or other unexpected errors
+                 errorBox.style.display = "block";
+                errorBox.innerHTML = "An unexpected error occurred. Please try again.";
+            });
+        }
+
+        function updateBio(event) {
+            event.preventDefault();
+
+            handleTextForm('/settings/bio', 'bio', 'bio-error-box');
+        }
+
+        function updateUsername(event) {
+            event.preventDefault();
+            
+            handleTextForm('/settings/username', 'username', 'username-error-box');
+        }
+
+        function updatePassword(event) {
+            event.preventDefault();
+            
+            handleTextForm('/settings/password', 'password', 'password-error-box');
+        }
+
+        // Pin functions to actions
+        document.getElementById("avatar-form").addEventListener("submit", handleImgForm);
+        document.getElementById("bio-form").addEventListener("submit", updateBio);
+        document.getElementById("username-form").addEventListener("submit", updateUsername);
+        document.getElementById("password-form").addEventListener("submit", updatePassword);
+    </script>
 {% endblock %}
