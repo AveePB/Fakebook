@@ -1,4 +1,5 @@
-from fakebook.database import Enemy, User
+from fakebook.database import Enemy, User, mysql
+import os, random, string, pathlib
 
 # Retrieves a user id
 def get_id(username):
@@ -55,3 +56,31 @@ def get_enemies(user_id):
 # Returns all profiles that contain the pattern
 def get_suggestions(pattern):
     return User.query.filter(User.nickname.ilike(f'%{pattern}%')).all()
+
+# Changes avatar image
+def update_avatar(avatar, user_id):
+    # Generate a new filename
+    extension = pathlib.Path(avatar.filename).suffix
+    hash_filename = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
+    hash_filename = hash_filename + extension
+
+    # Update user object
+    user = User.query.filter_by(id=user_id).first()
+    if (not user): return False
+    
+    # Change user data
+    prev_filename = user.avatar_filename
+    user.avatar_filename = hash_filename
+    try:
+        # Update user
+        mysql.session.add(user)
+        mysql.session.commit()
+
+        avatar.save(os.path.join('avatars', hash_filename))
+
+        # Delete previous avatar image
+        if (os.path.exists(f'avatars/{prev_filename}')):
+            os.remove(os.path.join('avatars', prev_filename))
+    except:
+        return False
+    return True

@@ -6,6 +6,7 @@ from fakebook.profile.routes import profile_bp
 from fakebook.search.routes import search_bp
 from fakebook.settings.routes import settings_bp
 from flask import Flask, redirect
+import os
 
 app = Flask(__name__)
 
@@ -29,6 +30,9 @@ if (__name__ == '__main__'):
     # Create tables
     with app.app_context():
         mysql.create_all()
+
+    # Create directory
+    os.makedirs('avatars', exist_ok=True)
     
     # Start application
     app.run()
