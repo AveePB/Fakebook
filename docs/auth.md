@@ -31,7 +31,7 @@ Its role is to validate and generate ***Json Web Tokens*** known as the  JWTs. T
 #### Status Codes:
 - **204**: successfully created a user account;
 - **400**: bad request, unable to process;
-- **409**: could not create a user account;
+- **409**: username is already taken;
 
 ## Login Endpoint (/auth/login) GET <a name="login_get"></a>
 - The Login Endpoint is responsible for returning the HTML page to the user.
