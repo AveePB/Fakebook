@@ -13,8 +13,7 @@ class IsUnauthenticated(BasePermission):
 
     def has_permission(self, request, view):
         return not request.user.is_authenticated
-
-# Create your views here.
+    
 class LoginView(APIView):
     permission_classes = [IsUnauthenticated]
 
@@ -25,15 +24,19 @@ class LoginView(APIView):
         # Examin request body
         username = request.POST.get('username')
         password = request.POST.get('password')
-        if (username == None or password == None): return Response({"error": "Form is invalid"}), 400
-        if (not username.isalnum() or len(username) > 32): return Response({"error": "Username doesn't meet the criteria"}), 400
-        if (len(username) < 6 or len(username) > 32): return Response({"error": "Password doesn't meet the criteria"}), 400
-        
-        # Validate and create user
-        user = UserCredentials.objects.create_user(username=username, password=password)
-        refresh = RefreshToken.for_user(user)
-        return Response({'refresh': str(refresh), 'access': str(refresh.access_token)})
+        if (username == None or password == None): return Response({"error": "Form is invalid"}, status=400)
+        if (not username.isalnum() or len(username) > 32): return Response({"error": "Username doesn't meet the criteria"}, status=400)
+        if (len(username) < 6 or len(username) > 32): return Response({"error": "Password doesn't meet the criteria"}, status=400)
 
+        # Validate credentials
+        user = UserCredentials.objects.filter(username=username)
+        if (user.exists() and user.get().check_password(password)):
+            refresh = RefreshToken.for_user(user.get())
+            return Response({'refresh': str(refresh), 'access': str(refresh.access_token)})
+        else:
+            return Response({"error": "Invalid credentials"}, status=401)
+
+# Create your views here.
 class RegisterView(APIView):
     permission_classes = [IsUnauthenticated]
 
@@ -44,14 +47,17 @@ class RegisterView(APIView):
         # Examin request body
         username = request.POST.get('username')
         password = request.POST.get('password')
-        if (username == None or password == None): return Response({"error": "Form is invalid"}), 400
-        if (not username.isalnum() or len(username) > 32): return Response({"error": "Username doesn't meet the criteria"}), 400
-        if (len(username) < 6 or len(username) > 32): return Response({"error": "Password doesn't meet the criteria"}), 400
+        if (username == None or password == None): return Response({"error": "Form is invalid"}, status=400)
+        if (not username.isalnum() or len(username) > 32): return Response({"error": "Username doesn't meet the criteria"}, status=400)
+        if (len(username) < 6 or len(username) > 32): return Response({"error": "Password doesn't meet the criteria"}, status=400)
 
-        # Validate credentials
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
+        
+        try:
+            # Validate and create user
+            user = UserCredentials(username=username)
+            user.set_password(password)
+            user.save(force_insert=True)
             refresh = RefreshToken.for_user(user)
             return Response({'refresh': str(refresh), 'access': str(refresh.access_token)})
-        else:
-            return Response({"error": "Invalid credentials"}, status=401)
+        except Exception:
+            return Response({"error": "User already exists"}, status=409)
