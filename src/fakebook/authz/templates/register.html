@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Fakebook - Register{% endblock %}
+
+{% block extra_styles %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <form id="registerForm">
+        <h2>Register</h2>
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required maxlength="32">
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required maxlength="32">
+        </div>
+        <div class="error-message" id="errorMessage" style="display: none;"></div>
+        <button type="submit">Register</button>
+    </form>
+    <div class="login-link">
+        <a href="{% url 'login' %}">Already have an account?</a>
+    </div>
+</div>
+{% load static %}
+    <script src="{% static 'js/register.js'%}"></script>
+{% endblock %}

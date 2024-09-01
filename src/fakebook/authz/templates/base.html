@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Fakebook{% endblock %}</title>
+    {% load static%}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        
+    {% block extra_styles %}
+    <!-- Placeholder for additional styles specific to child templates -->
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Fakebook</div>
+    </nav>
+    <div class="content">
+        {% block content %}
+        <!-- Content block that child templates will override -->
+        {% endblock %}
+    </div>
+</body>
+</html>
