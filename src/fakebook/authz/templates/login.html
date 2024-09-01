@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Fakebook - Log in{% endblock %}
+
+{% block extra_styles %}
+{% load static %}
+    <link rel="stylesheet" href="{% static '/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <form id="loginForm" autocomplete="off">
+        <h2>Login</h2>
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required maxlength="32">
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required maxlength="32">
+        </div>
+        <div class="error-message" id="errorMessage"></div>
+        <button type="submit">Login</button>
+    </form>
+    <div class="register-link">
+        <a href="{% url 'register' %}">Don't have an account?</a>
+    </div>
+
+</div>
+{% load static %}
+    <script src="{% static 'js/login.js'%}"></script>
+{% endblock %}
