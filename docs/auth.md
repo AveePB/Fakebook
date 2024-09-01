@@ -1,135 +1,97 @@
 # Authentication Application
 
-## Table of Contents
-- [Login Endpoint (`/authz/login/`)](#authzlogin)
-  - [GET Request](#get-request)
-  - [POST Request](#post-request)
-- [Register Endpoint (`/authz/register/`)](#authzregister)
-  - [GET Request](#get-request-1)
-  - [POST Request](#post-request-1)
-
 ## `/authz/login/`
 
 ### GET Request
-**Description**: Renders the login page.
 
-**Response**:
-- **Status Code**: `200 OK`
-- **Content**: The login HTML page.
+- **Description**: Returns the login page for the user.
+- **Response**: Renders the `login.html` template.
 
 ### POST Request
-**Description**: Authenticates a user and returns authentication tokens.
 
-**Request Body** (Form data):
-- `username`: The user's username.
-- `password`: The user's password.
-
-**Response**:
-- **Success**:
-  - **Status Code**: `200 OK`
-  - **Content**:
+- **Description**: Authenticates a user with the provided username and password.
+- **Request Body**: 
+  - `username` (string): The username of the user.
+  - `password` (string): The password of the user.
+- **Response**:
+  - **Success (200 OK)**:
     ```json
     {
-      "refresh": "<refresh_token>",
-      "access": "<access_token>"
+      "token": "access_token_here"
     }
     ```
-  - **Meaning**: Provides `refresh` and `access` tokens for authenticated access.
-
-- **Failure**:
-  - **Status Code**: `400 Bad Request`
-    - **Content**:
-      ```json
-      {
-        "error": "Form is invalid"
-      }
-      ```
-    - **Meaning**: Missing `username` or `password`, or invalid format.
-
-    - **Content**:
-      ```json
-      {
-        "error": "Username doesn't meet the criteria"
-      }
-      ```
-    - **Meaning**: `username` must be alphanumeric and between 6 and 32 characters.
-
-    - **Content**:
-      ```json
-      {
-        "error": "Password doesn't meet the criteria"
-      }
-      ```
-    - **Meaning**: `password` must be between 6 and 32 characters.
-
-  - **Status Code**: `401 Unauthorized`
-    - **Content**:
-      ```json
-      {
-        "error": "Invalid credentials"
-      }
-      ```
-    - **Meaning**: Authentication failed due to incorrect `username` or `password`.
+    - **Description**: Returns a JWT token if credentials are valid.
+  - **Client Error (400 Bad Request)**:
+    ```json
+    {
+      "error": "Form is invalid"
+    }
+    ```
+    - **Description**: Returned if either username or password is missing.
+    ```json
+    {
+      "error": "Username doesn't meet the criteria"
+    }
+    ```
+    - **Description**: Returned if the username is not alphanumeric or exceeds 32 characters.
+    ```json
+    {
+      "error": "Password doesn't meet the criteria"
+    }
+    ```
+    - **Description**: Returned if the password is shorter than 6 characters or longer than 32 characters.
+  - **Unauthorized (401 Unauthorized)**:
+    ```json
+    {
+      "error": "Invalid credentials"
+    }
+    ```
+    - **Description**: Returned if the credentials are incorrect.
 
 ## `/authz/register/`
 
 ### GET Request
-**Description**: Renders the registration page.
 
-**Response**:
-- **Status Code**: `200 OK`
-- **Content**: The registration HTML page.
+- **Description**: Returns the registration page for the user.
+- **Response**: Renders the `register.html` template.
 
 ### POST Request
-**Description**: Registers a new user and returns authentication tokens.
 
-**Request Body** (Form data):
-- `username`: The desired username for the new user.
-- `password`: The desired password for the new user.
-
-**Response**:
-- **Success**:
-  - **Status Code**: `200 OK`
-  - **Content**:
+- **Description**: Registers a new user with the provided username and password.
+- **Request Body**:
+  - `username` (string): The username of the new user.
+  - `password` (string): The password of the new user.
+- **Response**:
+  - **Success (201 Created)**:
     ```json
     {
-      "refresh": "<refresh_token>",
-      "access": "<access_token>"
+      "message": "User successfully created"
     }
     ```
-  - **Meaning**: User successfully registered; provides `refresh` and `access` tokens.
-
-- **Failure**:
-  - **Status Code**: `400 Bad Request`
-    - **Content**:
-      ```json
-      {
-        "error": "Form is invalid"
-      }
-      ```
-    - **Meaning**: Missing `username` or `password`, or invalid format.
-
-    - **Content**:
-      ```json
-      {
-        "error": "Username doesn't meet the criteria"
-      }
-      ```
-    - **Meaning**: `username` must be alphanumeric and between 6 and 32 characters.
-
-    - **Content**:
-      ```json
-      {
-        "error": "Password doesn't meet the criteria"
-      }
-      ```
-    - **Meaning**: `password` must be between 6 and 32 characters.
-
-  - **Status Code**: `409 Conflict`
-    - **Content**:
-      ```json
-      {
-        "error": "User already exists"
-      }
-      ```
-    - **Meaning**: Username already taken; cannot register the user.
+    - **Description**: Returned when a new user is successfully created.
+  - **Client Error (400 Bad Request)**:
+    ```json
+    {
+      "error": "Form is invalid"
+    }
+    ```
+    - **Description**: Returned if either username or password is missing.
+    ```json
+    {
+      "error": "Username doesn't meet the criteria"
+    }
+    ```
+    - **Description**: Returned if the username is not alphanumeric or exceeds 32 characters.
+    ```json
+    {
+      "error": "Password doesn't meet the criteria"
+    }
+    ```
+    - **Description**: Returned if the password is shorter than 6 characters or longer than 32 characters.
+  - **Conflict (409 Conflict)**:
+    ```json
+    {
+      "error": "User already exists"
+    }
+    ```
+    - **Description**: Returned if the username is already taken.
