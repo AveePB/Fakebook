@@ -1,61 +1,57 @@
-from django.http.request import HttpRequest
-from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponseForbidden, HttpResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import BasePermission
+from rest_framework_simplejwt.tokens import RefreshToken
+from authz.models import UserCredentials
+from django.contrib.auth import authenticate
 from django.shortcuts import render
-from django.views import View
 
-from authz.credentials_service import *
+class IsUnauthenticated(BasePermission):
+    """
+    Allows access only to unauthenticated users.
+    """
+
+    def has_permission(self, request, view):
+        return not request.user.is_authenticated
 
 # Create your views here.
-class LoginView(View):
-    # Handles GET requests
-    def get(self, request: HttpRequest):
+class LoginView(APIView):
+    permission_classes = [IsUnauthenticated]
+
+    def get(self, request):
         return render(request, 'login.html')
-    
-    # Handles POST requests
-    def post(self, request: HttpRequest):
-        # Inspect json body
+
+    def post(self, request):
+        # Examin request body
         username = request.POST.get('username')
         password = request.POST.get('password')
-
-        if (not username or not password): 
-            return HttpResponseBadRequest("Invalid form data")
+        if (username == None or password == None): return Response({"error": "Form is invalid"}), 400
+        if (not username.isalnum() or len(username) > 32): return Response({"error": "Username doesn't meet the criteria"}), 400
+        if (len(username) < 6 or len(username) > 32): return Response({"error": "Password doesn't meet the criteria"}), 400
         
-        # Inspect user data
-        if (checkCredentials(username, password)):
-            # Return JWT
-            return HttpResponse(status=200)
+        # Validate and create user
+        user = UserCredentials.objects.create_user(username=username, password=password)
+        refresh = RefreshToken.for_user(user)
+        return Response({'refresh': str(refresh), 'access': str(refresh.access_token)})
+
+class RegisterView(APIView):
+    permission_classes = [IsUnauthenticated]
+
+    def get(self, request):
+        return render(request, 'register.html')
+
+    def post(self, request):
+        # Examin request body
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if (username == None or password == None): return Response({"error": "Form is invalid"}), 400
+        if (not username.isalnum() or len(username) > 32): return Response({"error": "Username doesn't meet the criteria"}), 400
+        if (len(username) < 6 or len(username) > 32): return Response({"error": "Password doesn't meet the criteria"}), 400
+
+        # Validate credentials
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            return Response({'refresh': str(refresh), 'access': str(refresh.access_token)})
         else:
-            return HttpResponseNotFound("User credentials are invalid")
-
-
-class SignupView(View):
-    # Handles GET requests
-    def get(self, request: HttpRequest):
-        return render(request, 'signup.html')
-
-    # Handles POST requests
-    def post(self, request: HttpRequest):
-        # Inspect json body
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        if (not username or not password): 
-            return HttpResponseForbidden("Invalid form data")
-        
-        # Inspect user data
-        try:
-            validateUsername(username)
-            validatePassword(password)
-        except FieldRequired:
-            return HttpResponseForbidden("Invalid form data")
-        except CriteriaError:
-            return HttpResponseBadRequest("Username must be alphanumeric and has 5-32 characters,\npassword must have 6-32 characters")
-        except UsernameTakenError:
-            return HttpResponseForbidden("Username is already taken")
-        
-        print("IS taken:", UserCredentials.objects.filter(username=username). exists())
-
-        # Save new user credentials
-        new_usercredentials = UserCredentials(username=username)
-        new_usercredentials.set_password(password)
-        new_usercredentials.save(force_insert=True)
-        return HttpResponse(status=204)
+            return Response({"error": "Invalid credentials"}, status=401)
