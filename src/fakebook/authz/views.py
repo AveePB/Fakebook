@@ -4,7 +4,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import AccessToken
 from django.contrib.auth import login as auth_login
 from authz.models import UserCredentials
-from dj_rest_auth.views import LoginView
 from django.shortcuts import render
 from django.conf import settings
 import datetime
