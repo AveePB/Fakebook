@@ -1,11 +1,23 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.tokens import AccessToken
+from django.contrib.auth import login as auth_login
 from authz.models import UserCredentials
+from dj_rest_auth.views import LoginView
 from django.shortcuts import render
+from django.conf import settings
+import datetime
 
 # Create your views here.
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request):
+        response = Response({'message', 'Successfully logged out'}, status=201)
+        response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'])
+        return response
+
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -24,8 +36,22 @@ class LoginView(APIView):
         # Validate credentials
         user = UserCredentials.objects.filter(username=username)
         if (user.exists() and user.get().check_password(password)):
-            refresh = RefreshToken.for_user(user.get())
-            return Response({'token': str(refresh.access_token)})
+            auth_login(request, user.get())
+            
+            response = Response({'message': 'Successfully logged in'})
+            token = AccessToken.for_user(user.get())
+
+            # Set up cookie
+            response.set_cookie(
+                settings.SIMPLE_JWT['AUTH_COOKIE'],
+                str(token),
+                expires=datetime.datetime.now(datetime.UTC) + settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                httponly=True,
+                secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],
+            )
+            return response
+            
         else:
             return Response({"error": "Invalid credentials"}, status=401)
 
