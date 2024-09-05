@@ -6,6 +6,7 @@ from django.db import IntegrityError
 
 from users.models import UserProfile
 from users.forms import *
+import uuid
 import os
 
 # Create your views here.
@@ -63,14 +64,15 @@ class AvatarView(APIView):
             
             # Delete previous avatar
             user = UserProfile.objects.get(id=user_id)
-            try:
-                if (user.avatar != None and os.path.exists(user.avatar.path)):
-                    os.remove(user.avatar.path)
-            except ValueError:
-                pass
+            if (user.avatar):
+                user.avatar.delete(save=False)
+            
+            # Generate custom name
+            ext = avatar.name.split('.')[-1]
+            new_filename = f"{uuid.uuid4().hex}.{ext}"
             
             # Try to change avatar
-            user.avatar = avatar
+            user.avatar.save(new_filename, avatar)
             user.save(force_update=True)
             return Response({'message': 'Avatar successfully uploaded'}, status=201)
 
@@ -82,13 +84,9 @@ class AvatarView(APIView):
         user = UserProfile.objects.get(id=user_id)
 
         # Delete current avatar
-        try:
-            if (user.avatar != None and os.path.exists(user.avatar.path)):
-                os.remove(user.avatar.path)
-        except ValueError:
-            pass
-
-        user.avatar = None
+        if (user.avatar):
+            user.avatar.delete(save=False)
+    
         user.save(force_update=True)
 
         return Response({'message': 'Avatar successfully deleted'}, status=201)         
