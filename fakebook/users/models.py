@@ -40,12 +40,6 @@ class UserProfile(AbstractBaseUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
-    def isAvatarSet(self) -> bool:
-        return self.avatar != None
-    
-    def isBioSet(self) -> bool:
-        return self.bio != None
-    
     def has_perm(self, perm, obj=None):
         return self.is_superuser
 
