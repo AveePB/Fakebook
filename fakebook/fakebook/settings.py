@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Custom Apps
     "apps.users",
     "apps.authz",
+    "apps.friends",
 ]
 
 # JWT Authentication settings
