@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db import IntegrityError
 
-from users.models import UserProfile
-from users.forms import *
+from apps.users.models import UserProfile
+from apps.users.forms import *
 import uuid
 import os
 

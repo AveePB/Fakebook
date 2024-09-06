@@ -10,8 +10,8 @@ from django.conf import settings
 
 import datetime
 
-from users.forms import UsernamePasswordForm
-from users.models import UserProfile
+from apps.users.forms import UsernamePasswordForm
+from apps.users.models import UserProfile
 
 # Create your views here.
 class LoginView(APIView):

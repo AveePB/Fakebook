@@ -43,14 +43,14 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
 
     # Custom Apps
-    "users",
-    "authz",
+    "apps.users",
+    "apps.authz",
 ]
 
 # JWT Authentication settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'authz.security.CookieJWTAuthentication',
+        'apps.authz.security.CookieJWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',

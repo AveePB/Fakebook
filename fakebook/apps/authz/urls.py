@@ -1,5 +1,5 @@
 from django.urls import path
-from authz.views import LoginView, RegisterView
+from apps.authz.views import LoginView, RegisterView
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
