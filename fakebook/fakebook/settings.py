@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "apps.users",
     "apps.authz",
     "apps.friends",
+    "apps.posts",
 ]
 
 # JWT Authentication settings
