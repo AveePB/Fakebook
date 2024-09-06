@@ -22,6 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path('auth/', include('apps.authz.urls')),
     path('users/', include('apps.users.urls')),
+    path('friends/', include('apps.friends.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
