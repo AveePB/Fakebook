@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import Response, status
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -76,10 +76,17 @@ class LoginPage(APIView):
                 login(request, authenticated_user)
 
                 # Operation success
-                return Response({'message': 'User has been logged in.'}, status.HTTP_204_NO_CONTENT)
+                return Response({'message': 'User has been logged in.'}, status.HTTP_200_OK)
             
             # User data are invalid
             return Response({'message': 'Credentials are invalid.'}, status.HTTP_404_NOT_FOUND)
 
         # Invalid form
         return Response({'message': user_form.errors.as_text()}, status.HTTP_400_BAD_REQUEST)
+
+class LogoutPage(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return Response(None, status.HTTP_204_NO_CONTENT)
