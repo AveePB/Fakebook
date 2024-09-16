@@ -1,0 +1,18 @@
+{% extends 'auth/base.html' %}
+
+{% block title %}Fakebook - Welcome {% endblock %}
+
+{% block head %} 
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'auth/css/hero.css' %}">
+{% endblock %}
+
+{% block body %} 
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Fakebook!</h1>
+            <p>Connect, share, and discover with friends and be part of the community!</p>
+
+            <a href="register.html" class="cta-button">Join us today</a>
+        </div>
+    </section>
+{% endblock %}
