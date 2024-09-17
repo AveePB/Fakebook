@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import Response, status
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
@@ -104,9 +104,13 @@ class BioView(APIView):
         return Response({'message': form.errors.as_text()}, status.HTTP_400_BAD_REQUEST)        
 
 class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, user_uuid):
+        # Check if not authenticated
+        if (request.user.is_anonymous):
+            return redirect('hero-page')
+        
         current_user_profile, created = Profile.objects.get_or_create(user=request.user)
         current_user_avatar_url = current_user_profile.get_avatar_url()
 

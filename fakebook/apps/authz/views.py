@@ -89,4 +89,4 @@ class LogoutPage(APIView):
     
     def get(self, request, *args, **kwargs):
         logout(request)
-        return Response(None, status.HTTP_204_NO_CONTENT)
+        return redirect('hero-page')
