@@ -7,9 +7,9 @@
         {% block title %} {% endblock %}
     </title>
 
-    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'auth/css/styles.css' %}">
-    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'auth/css/nav.css' %}">
-    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'auth/css/footer.css' %}">
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/styles.css' %}">
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/nav.css' %}">
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/footer.css' %}">
 
     {% block head %} {% endblock %}
 </head>
@@ -29,8 +29,13 @@
             </nav>
         </div>
     
-        <div class="profile-section">
-            {% load static%} <a href=""><img src="{% static 'auth/img/avatar.jpg' %}" alt="Avatar" id="avatar" class="avatar"></a>
+        <div class="dropdown">
+            {% load static %} <img src="{% static 'bases/img/avatar.jpg' %}" alt="Avatar" id="avatar" class="avatar">
+           <div class="content">
+                <a href="#">My Profile</a>
+                <a href="#">Settings</a>
+                <a href="#">Log Out</a>
+           </div>
         </div>
         
     </header>
@@ -42,7 +47,5 @@
     <footer>
         <p>&copy; 2024 Fakebook. All rights reserved.</p>
     </footer>
-
-    {% load static %} <script src="{% static 'auth/js/forms.js' %}"></script>
 </body>
 </html>
