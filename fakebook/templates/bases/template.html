@@ -30,12 +30,12 @@
         </div>
     
         <div class="dropdown">
-            {% load static %} <img src="{% static 'bases/img/avatar.jpg' %}" alt="Avatar" id="avatar" class="avatar">
-           <div class="content">
-                <a href="#">My Profile</a>
+            <img src="{{ current_user_avatar_url }}" alt="Avatar" id="avatar" class="avatar">
+            <div class="content">
+                <a href="{% url 'profile-page' user_uuid=current_user_uuid %}">My Profile</a>
                 <a href="#">Settings</a>
-                <a href="#">Log Out</a>
-           </div>
+                <a href="{% url 'logout-page' %}">Log Out</a>
+            </div>
         </div>
         
     </header>

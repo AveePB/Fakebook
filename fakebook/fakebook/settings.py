@@ -117,14 +117,14 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-DEFAULT_AVATAR_URL =  '/static/bases/img/avatar.jpg'
-DEFAULT_BACKGROUND_URL = '/static/bases/img/background.jpg'
-
 
 # Media files (uploaded by users)
 # https://docs.djangoproject.com/en/5.1/topics/files/
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+DEFAULT_AVATAR_URL =  '/media/default/avatar.jpg'
+DEFAULT_BACKGROUND_URL = '/media/default/background.jpg'
 
 
 # Default primary key field type
