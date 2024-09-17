@@ -11,14 +11,14 @@
     <div class="login-container">
         <div class="login-form">
             <h2>Login</h2>
-            <form id="loginForm" message-box="login-message-box">
-                <input type="email" id="email" placeholder="Email or phone number" required>
-                <input type="password" id="password" placeholder="Password" required>
+            <form method="post" action="{% url 'login-page' %}" id="loginForm" message-box="login-message-box">
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="password" name="password" id="password" placeholder="Password" required>
 
                 <button type="submit">Login</button>
                 <div id="login-message-box" class="message-box"></div>
 
-                <a href="" class="sub-link">Don't have an account?</a>
+                <a href="{% url 'register-page' %}" class="sub-link">Don't have an account?</a>
                 <a href="" class="sub-link">Forgot password?</a>
             </form>
         </div>

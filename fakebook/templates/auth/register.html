@@ -11,14 +11,17 @@
     <div class="register-container">
         <div class="register-form">
             <h2>Register</h2>
-            <form id="registerForm" message-box="register-message-box">
-                <input type="email" id="email" placeholder="Email or phone number" required>
-                <input type="password" id="password" placeholder="Password" required>
+            <form method="post" action="{% url 'register-page' %}" id="registerForm" message-box="register-message-box">
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+
+                <input type="text" name="first_name" id="first_name" placeholder="First name" required>
+                <input type="text" name="last_name" id="last_name" placeholder="Last name" required>
 
                 <button type="submit">Register</button>
                 <div id="register-message-box" class="message-box"></div>
 
-                <a href="" class="sub-link">Already have an account?</a>
+                <a href="{% url 'login-page' %}" class="sub-link">Already have an account?</a>
                 <a href="" class="sub-link">Forgot password?</a>
             </form>
         </div>

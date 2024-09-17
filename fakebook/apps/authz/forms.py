@@ -11,7 +11,7 @@ class RegisterForm(forms.Form):
         required=True,
         error_messages={
             'required': 'Email is required.',
-            'min_length': 'Email must be at least 3 characters long.',
+            'min_length': 'Email must be at least 8 characters long.',
             'max_length': 'Email cannot exceed 32 characters.',
         }
     )
@@ -23,7 +23,7 @@ class RegisterForm(forms.Form):
         required=True,
         error_messages={
             'required': 'Password is required.',
-            'min_length': 'Password must be at least 6 characters long.',
+            'min_length': 'Password must be at least 8 characters long.',
             'max_length': 'Password cannot exceed 32 characters.'
         }
     )
@@ -61,7 +61,7 @@ class LoginForm(forms.Form):
         required=True,
         error_messages={
             'required': 'Email is required.',
-            'min_length': 'Email must be at least 3 characters long.',
+            'min_length': 'Email must be at least 8 characters long.',
             'max_length': 'Email cannot exceed 32 characters.',
         }
     )
@@ -73,7 +73,7 @@ class LoginForm(forms.Form):
         required=True,
         error_messages={
             'required': 'Password is required.',
-            'min_length': 'Password must be at least 6 characters long.',
+            'min_length': 'Password must be at least 8 characters long.',
             'max_length': 'Password cannot exceed 32 characters.'
         }
     )
