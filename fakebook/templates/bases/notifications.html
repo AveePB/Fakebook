@@ -1,0 +1,75 @@
+{% extends 'bases/template.html' %}
+
+{% block title %}Fakebook - Notifications{% endblock %}
+
+{% block head %} 
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/notifications.css' %}">
+{% endblock %}
+
+{% block body %} 
+    <section class="container">
+        <div class="notification-container">
+        <h1>Notifications</h1>
+            {% for n in notifications %}
+            <div class="notification">
+                <div class="message-preview">{{ n.content }}</div>
+                <div class="notification-actions">
+                    <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                    {% if n.seen %}    
+                        class="mark-icon marked"
+                    {% else %}
+                        class="mark-icon"
+                    {% endif %}
+                    
+                    data-notification-id="{{ n.id }}">
+
+                    <path d="M5 12l5 5L20 7"></path>
+                    </svg>
+                    <div class="notification-date">{{ n.created_at }}</div>
+                </div>
+            </div>
+            {% empty %}
+                No notifications yet...
+            {% endfor %}
+        </div>
+    </section>
+
+    <script>
+        function markNotificationAsRead(notificationId) {
+            if (!notificationId) {
+                console.error('Invalid notification ID');
+                return;
+            }
+
+            var xhr = new XMLHttpRequest();
+            var url = `/notifications/mark/${notificationId}/`;
+
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}'); // Ensure CSRF token is included
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 204) 
+                        console.log('Notification marked as read.');
+                    else if (xhr.status >= 400 && xhr.status < 500) 
+                        console.error('Client error occurred:', xhr.status, xhr.responseText);
+                    else if (xhr.status >= 500) 
+                        console.error('Server error occurred:', xhr.status, xhr.responseText);
+                }
+            };
+
+            xhr.send();
+        }
+
+
+        // Attach the function to a click event of a mark button
+        document.querySelectorAll('.mark-icon').forEach(function(element) {
+            element.addEventListener('click', function() {
+                var notificationId = this.getAttribute('data-notification-id');
+                markNotificationAsRead(notificationId);
+                element.classList.add('marked');
+            });
+        });
+    </script>
+
+{% endblock %}

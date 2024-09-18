@@ -1,0 +1,93 @@
+.container {
+    background-image: url('../img/profile-page-bg.jpg'); /* Replace with your background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; /* Ensure no repeat */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    text-align: center;
+    color: rgb(0, 0, 0);
+    padding: 0; /* Remove any extra padding */
+}
+
+.notification-container {
+    width: 80%;
+    max-width: 600px;
+    height: 400px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+.notification-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notification-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.notification-container h1 {
+    margin-bottom: 10px;
+}
+
+.notification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.notification:hover {
+    background-color: #f9f9f9;
+}
+
+.message-preview {
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notification-actions {
+    display: flex;
+    align-items: center;
+}
+
+.mark-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    fill: none;
+    stroke: #28a745;
+    cursor: pointer;
+}
+
+.notification:hover .message-preview {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: initial;
+}
+
+.notification-date {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Style to disable clicking after marking */
+.marked {
+    pointer-events: none;
+    opacity: 0.2;
+}
