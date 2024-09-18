@@ -1,0 +1,43 @@
+{% extends 'bases/template.html' %}
+
+{% block title %}Fakebook - Profile Preview{% endblock %}
+
+{% block head %} 
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/profile.css' %}">
+{% endblock %}
+
+{% block body %} 
+<div class="container">
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="{{ profile.get_background_url }}" alt="User Background" class="background-img">
+            <img src="{{ profile.get_avatar_url }}" alt="User Avatar" class="avatar-img">
+
+            <!-- Optional Edit Profile Button -->
+            {% if is_own %}
+                <a href="#">
+                    <button class="edit-btn">Edit Profile</button>
+                </a>
+            {% endif %}
+            </div>
+        <div class="profile-section">
+            <h1 class="username">{{user.first_name}} {{user.last_name}}</h1>
+            
+            <!-- Buttons for Add Friend and Message -->
+            <div class="action-buttons">
+                <button class="add-friend-btn">Add Friend</button>
+                <button class="message-btn">Message</button>
+            </div>
+            
+            <div class="profile-content">
+                <div class="left-section">
+                    <a href="#" class="friends-link">Friends</a>
+                </div>
+                <div class="right-section">
+                    <p class="bio">{{ profile.bio }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

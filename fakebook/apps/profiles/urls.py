@@ -6,4 +6,5 @@ urlpatterns = [
     path('background/', views.BackgroundView.as_view(), name='background-page'),
     path('bio/', views.BioView.as_view(), name='bio-page'),
     path('<str:user_uuid>/', views.ProfileView.as_view(), name='profile-page'),
+    path('', views.ProfileRedirectView.as_view(), name='profile-redirect-page'),
 ]

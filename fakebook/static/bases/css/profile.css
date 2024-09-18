@@ -1,0 +1,191 @@
+.container {
+    background-image: url('../img/profile-page-bg.jpg'); /* Replace with your background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; /* Ensure no repeat */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    text-align: center;
+    color: rgb(255, 255, 255);
+    padding: 0; /* Remove any extra padding */
+}
+
+.profile-container {
+    width: 90%;
+    max-width: 600px;
+    background-color: #fbf8f8;
+    border-radius: 3%;
+    box-shadow: 0 2px 12px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    position: relative;
+    
+}
+
+.profile-header {
+    position: relative;
+    height: 180px;
+    background: #f0f0f0;
+}
+
+.background-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.profile-section {
+    padding: 30px;
+    padding-top: 60px;
+    text-align: center;
+}
+
+.username {
+    font-size: 22px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Action Buttons */
+.action-buttons {
+    margin-top: 20px;
+}
+
+.add-friend-btn, .message-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.add-friend-btn:hover, .message-btn:hover {
+    background-color: #0056b3;
+}
+
+.message-btn {
+    background-color: #28a745;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.left-section, .right-section {
+    text-align: center;
+}
+
+.friends-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.edit-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.bio {
+    font-size: 14px;
+    color: #666;
+    text-align: left;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .avatar-img {
+        width: 80px;
+        height: 80px;
+        bottom: -40px;
+    }
+
+    .profile-section {
+        padding: 20px;
+        padding-top: 50px;
+    }
+
+    .username {
+        font-size: 20px;
+    }
+
+    .profile-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .bio {
+        text-align: center;
+        margin: 0;
+    }
+
+    .edit-btn {
+        top: 10px;
+        right: 10px;
+        padding: 6px 14px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .avatar-img {
+        width: 70px;
+        height: 70px;
+        bottom: -35px;
+    }
+
+    .username {
+        font-size: 18px;
+    }
+
+    .profile-section {
+        padding: 15px;
+        padding-top: 45px;
+    }
+
+    .bio {
+        font-size: 13px;
+    }
+
+    .add-friend-btn, .message-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
+

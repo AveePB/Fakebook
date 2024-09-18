@@ -111,18 +111,34 @@ class ProfileView(APIView):
         if (request.user.is_anonymous):
             return redirect('hero-page')
         
-        current_user_profile, created = Profile.objects.get_or_create(user=request.user)
-        current_user_avatar_url = current_user_profile.get_avatar_url()
+        logged_user_profile, created = Profile.objects.get_or_create(user=request.user)
+        logged_user_avatar_url = logged_user_profile.get_avatar_url()
 
         try:
             profile = Profile.objects.get(uuid=user_uuid)
-            return render(request, 'bases/template.html', {
-                'current_user_avatar_url': current_user_avatar_url,
-                'current_user_uuid': current_user_profile.uuid, 
-                'user': request.user, 
+            return render(request, 'bases/profile.html', {
+                'current_user_avatar_url': logged_user_avatar_url,
+                'current_user_uuid': logged_user_profile.uuid, 
+                'user': profile.user, 
                 'profile': profile,
+                'is_own': request.user == profile.user,
             })
         except ValidationError:
             raise Http404()
         except Profile.DoesNotExist:
             raise Http404()
+        
+class ProfileRedirectView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        # Check if not authenticated
+        if (request.user.is_anonymous):
+            return redirect('hero-page')
+        
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        
+        if created:
+            profile.save()  # Save any additional modifications, if needed
+
+        return redirect('profile-page', user_uuid=profile.uuid)
