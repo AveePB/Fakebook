@@ -25,6 +25,7 @@ urlpatterns = [
     path('', HeroPage.as_view(), name='hero-page'),
     path('auth/', include('apps.authz.urls')),
     path('profiles/', include('apps.profiles.urls')),
+    path('notifications/', include('apps.notifications.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
