@@ -26,6 +26,7 @@ urlpatterns = [
     path('auth/', include('apps.authz.urls')),
     path('profiles/', include('apps.profiles.urls')),
     path('notifications/', include('apps.notifications.urls')),
+    path('friends/', include('apps.friends.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,73 @@
+.content-body {
+    background-image: url('../img/profile-page-bg.jpg'); /* Replace with your background image */
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    display: flex;
+    flex-direction: column; /* Arrange children vertically */
+    justify-content: center;
+    align-items: center;
+    min-height: 89vh; /* Updated min height */
+    padding: 20px;
+}
+
+.panel-header {
+    font-size: 24px; /* Header font size */
+    margin-bottom: 20px; /* Spacing below the header */
+    text-align: center;
+    color: #333; /* Header text color */
+}
+
+.friends-manager {
+    width: 100%;
+    max-width: 800px;
+    height: 500px; /* Fixed height */
+    background-color: #ffffff; /* Grayish background */
+    padding: 20px;
+    border-radius: 10px;
+    overflow-y: auto; /* Allows vertical scroll */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
+/* Friend item */
+.friend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Avatar */
+.friend-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+/* Username */
+.friend-username {
+    flex-grow: 1;
+    font-size: 18px;
+    text-decoration: none;
+    color: #333;
+}
+
+/* Remove button */
+.remove-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: #e60000;
+}

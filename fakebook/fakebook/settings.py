@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.authz',
     'apps.profiles',
     'apps.notifications',
+    'apps.friends',
 ]
 
 MIDDLEWARE = [

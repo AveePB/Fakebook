@@ -1,0 +1,64 @@
+{% extends 'bases/template.html' %}
+
+{% block title %}Fakebook - Friends{% endblock %}
+
+{% block head %} 
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/friends.css' %}">
+{% endblock %}
+
+{% block body %} 
+    <div class="content-body">
+        <div class="friends-manager">
+            <h2 class="panel-header">Friends Panel</h2> <!-- Header for the friends panel -->
+            {% for friend in friends %}
+                <div class="friend-item">
+                    <img class="friend-avatar" src="{{ friend.get_avatar_url }}" alt="{{ friend.user.first_name }}'s avatar">
+                    <a class="friend-username" href="{% url 'profile-page' friend.uuid %}">{{ friend.user.first_name }} {{ friend.user.last_name }}</a>
+                    {% if is_own %}
+                        <button class="remove-btn" data-user-uuid="{{ friend.uuid }}">Remove</button>
+                    {% endif %}
+                </div>
+            {% empty %}
+                No friends yet...
+            {% endfor %}
+
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Select all remove buttons
+            const removeButtons = document.querySelectorAll('.remove-btn');
+    
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get the user_uuid from the button's dataset
+                    const userUuid = this.dataset.userUuid;
+    
+                    // Confirmation before deletion
+                    if (confirm(`Are you sure you want to remove this friend?`)) {
+                        // Send delete request to the server
+                        fetch(`/friends/${userUuid}/`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+                            }
+                        })
+                        .then(response => {
+                            if (response.status === 204) {
+                                // Refresh the page on successful deletion
+                                window.location.reload();
+                            } else {
+                                alert('Failed to remove friend. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while trying to remove the friend.');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

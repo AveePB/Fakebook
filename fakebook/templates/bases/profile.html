@@ -25,13 +25,18 @@
             
             <!-- Buttons for Add Friend and Message -->
             <div class="action-buttons">
-                <button class="add-friend-btn">Add Friend</button>
+                {% if is_friend %}
+                    <button class="remove-friend-btn">Remove Friend</button>
+                {% else %}
+                    <button class="add-friend-btn">Add Friend</button>
+                {% endif %}
+
                 <button class="message-btn">Message</button>
             </div>
             
             <div class="profile-content">
                 <div class="left-section">
-                    <a href="#" class="friends-link">Friends</a>
+                    <a href="{% url 'friends-page' user_uuid=profile.uuid %}" class="friends-link">Friends</a>
                 </div>
                 <div class="right-section">
                     <p class="bio">{{ profile.bio }}</p>
