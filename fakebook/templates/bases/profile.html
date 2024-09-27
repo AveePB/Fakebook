@@ -7,42 +7,119 @@
 {% endblock %}
 
 {% block body %} 
-<div class="container">
-    <div class="profile-container">
-        <div class="profile-header">
-            <img src="{{ profile.get_background_url }}" alt="User Background" class="background-img">
-            <img src="{{ profile.get_avatar_url }}" alt="User Avatar" class="avatar-img">
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-header">
+                <img src="{{ profile.get_background_url }}" alt="User Background" class="background-img">
+                <img src="{{ profile.get_avatar_url }}" alt="User Avatar" class="avatar-img">
 
-            <!-- Optional Edit Profile Button -->
-            {% if is_own %}
-                <a href="#">
-                    <button class="edit-btn">Edit Profile</button>
-                </a>
-            {% endif %}
-            </div>
-        <div class="profile-section">
-            <h1 class="username">{{user.first_name}} {{user.last_name}}</h1>
-            
-            <!-- Buttons for Add Friend and Message -->
-            <div class="action-buttons">
-                {% if is_friend %}
-                    <button class="remove-friend-btn">Remove Friend</button>
-                {% else %}
-                    <button class="add-friend-btn">Add Friend</button>
+                <!-- Optional Edit Profile Button -->
+                {% if is_own %}
+                    <a href="#">
+                        <button class="edit-btn">Edit Profile</button>
+                    </a>
                 {% endif %}
-
-                <button class="message-btn">Message</button>
-            </div>
-            
-            <div class="profile-content">
-                <div class="left-section">
-                    <a href="{% url 'friends-page' user_uuid=profile.uuid %}" class="friends-link">Friends</a>
                 </div>
-                <div class="right-section">
-                    <p class="bio">{{ profile.bio }}</p>
+            <div class="profile-section">
+                <h1 class="username">{{user.first_name}} {{user.last_name}}</h1>
+                
+                <!-- Buttons for Add Friend and Message -->
+                {% if not is_own %}
+                    <div class="action-buttons">
+                        {% if is_friend %}
+                            <button class="remove-friend-btn" data-user-uuid="{{ profile.uuid }}">Remove Friend</button>
+                        {% else %}
+                            <button class="add-friend-btn" data-user-uuid="{{ profile.uuid }}">Add Friend</button>
+                        {% endif %}
+
+                        <button class="message-btn">Message</button>
+                    </div>
+                {% endif %}
+                
+                <div class="profile-content">
+                    <div class="left-section">
+                        <a href="{% url 'friends-page' user_uuid=profile.uuid %}" class="friends-link">Friends</a>
+                    </div>
+                    <div class="right-section">
+                        <p class="bio">{{ profile.bio }}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Select all remove buttons
+            const removeButtons = document.querySelectorAll('.remove-friend-btn');
+    
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get the user_uuid from the button's dataset
+                    const userUuid = this.dataset.userUuid;
+    
+                    // Confirmation before deletion
+                    if (confirm(`Are you sure you want to remove this friend?`)) {
+                        // Send delete request to the server
+                        fetch(`/friends/${userUuid}/`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+                            }
+                        })
+                        .then(response => {
+                            if (response.status === 204) {
+                                // Refresh the page on successful deletion
+                                window.location.reload();
+                            } else {
+                                alert('Failed to remove friend. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while trying to remove the friend.');
+                        });
+                    }
+                });
+            });
+
+
+            // Select all add friend buttons
+            const addFriendButtons = document.querySelectorAll('.add-friend-btn');
+
+            addFriendButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get the user_uuid from the button's dataset
+                    const userUuid = this.dataset.userUuid;
+
+                    // Confirmation before adding a friend
+                    if (confirm(`Are you sure you want to add this friend?`)) {
+                        // Send POST request to the server
+                        fetch(`/friends/${userUuid}/`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+                            },
+                            body: JSON.stringify({ action: 'add' }) // Send any data you want, can customize as needed
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('Friend added successfully!');
+                                // Optionally refresh or update the UI
+                                window.location.reload(); // Refresh the page
+                            } else {
+                                alert('Failed to add friend. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while trying to add the friend.');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

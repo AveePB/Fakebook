@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.http import Http404
 
+from apps.friends.models import Friendship
 from apps.profiles.models import Profile
 from apps.profiles.forms import *
 import uuid
@@ -116,12 +117,16 @@ class ProfileView(APIView):
 
         try:
             profile = Profile.objects.get(uuid=user_uuid)
+            is_friend = (Friendship.objects.filter(user1=request.user, user2=profile.user).exists()
+                or Friendship.objects.filter(user1=profile.user, user2=request.user).exists())
+            
             return render(request, 'bases/profile.html', {
                 'current_user_avatar_url': logged_user_avatar_url,
                 'current_user_uuid': logged_user_profile.uuid, 
                 'user': profile.user, 
                 'profile': profile,
                 'is_own': request.user == profile.user,
+                'is_friend': is_friend,
             })
         except ValidationError:
             raise Http404()
