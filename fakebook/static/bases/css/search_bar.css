@@ -1,0 +1,74 @@
+/* Search Bar Styling */
+.search-bar {
+    width: 350px;
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    font-size: 16px;
+    background-color: #f0f2f5;
+    outline: none;
+}
+
+.search-bar::placeholder {
+    color: #8a8d91;
+}
+
+/* Suggestions Container */
+.suggestions-container {
+    visibility: hidden;
+    position: absolute;
+    width: 350px;
+    background-color: white; /* Match with the Fakebook card background */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    max-height: 300px; /* Limit height and make it scrollable */
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+.suggestions-container.visible {
+    visibility: visible; /* Show the suggestions */
+}
+
+/* Individual suggestion item */
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee; /* Subtle border between suggestions */
+    transition: background-color 0.2s;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0; /* Light hover effect */
+}
+
+/* Avatar in the suggestion */
+.suggestion-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover; /* Ensure the avatar fits in the circle */
+}
+
+/* Username styling in suggestion */
+.suggestion-username {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+/* Adjust link appearance on hover */
+.suggestion-username:hover {
+    color: #1877f2; /* Fakebook's signature blue color */
+}
+
+/* No users found message */
+.no-results {
+    padding: 10px;
+    text-align: center;
+    color: #999;
+}

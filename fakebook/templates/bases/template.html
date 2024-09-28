@@ -10,16 +10,22 @@
     {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/styles.css' %}">
     {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/nav.css' %}">
     {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/footer.css' %}">
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/search_bar.css' %}">
 
     {% block head %} {% endblock %}
 </head>
 <body>
     <header>
         <div class="logo">Fakebook</div>
-        
         <div class="header-center">
-            <input type="text" class="search-bar" placeholder="Search...">
-            
+
+            <div class="serach-containter">
+                <!-- Search Bar -->
+                <input type="text" id="search-bar" class="search-bar" placeholder="Search for users..." />
+                
+                <!-- Suggestions Container -->
+                <div id="suggestions" class="suggestions-container"></div>
+            </div>
             <nav>
                 <ul>
                     <li><a href=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="white" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a></li>
@@ -39,7 +45,7 @@
         </div>
         
     </header>
-    
+
     <div class="main-content"></div>
         {% block body %} {% endblock %}
     </div>
@@ -47,5 +53,55 @@
     <footer>
         <p>&copy; 2024 Fakebook. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript Code (Placed after the elements) -->
+    <script>
+        const searchInput = document.querySelector('#search-bar'); // Your search bar input field
+        const suggestionsContainer = document.querySelector('#suggestions'); // Container to show suggestions
+
+        // Function to handle search input and fetch suggestions
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value;
+
+            // Clear previous suggestions
+            suggestionsContainer.innerHTML = '';
+
+            if (query.length > 2) { // Start search after 3 characters
+                fetch(`/search/?q=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Generate suggestions
+                        if (data.length > 0) {
+                            data.forEach(user => {
+                                const suggestion = document.createElement('div');
+                                suggestion.classList.add('suggestion-item');
+                                
+                                suggestion.innerHTML = `
+                                    <img src="${user.avatar_url}" class="suggestion-avatar" alt="${user.full_name}'s avatar">
+                                    <a href="/profiles/${user.uuid}/" class="suggestion-username">${user.full_name}</a>
+                                `;
+                                
+                                suggestionsContainer.appendChild(suggestion);
+                            });
+                        } else {
+                            suggestionsContainer.innerHTML = '<div class="no-results">No users found</div>';
+                        }
+                        suggestionsContainer.classList.add('visible');
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+            else {
+                suggestionsContainer.classList.remove('visible');
+            }
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) {
+                suggestionsContainer.innerHTML = ''; // Clear suggestions
+                suggestionsContainer.classList.remove('visible');
+            }
+        });
+    </script>
 </body>
 </html>

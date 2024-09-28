@@ -27,20 +27,6 @@ header {
     gap: 20px;
 }
 
-.search-bar {
-    width: 350px;
-    padding: 8px;
-    border-radius: 20px;
-    border: none;
-    font-size: 16px;
-    background-color: #f0f2f5;
-    outline: none;
-}
-
-.search-bar::placeholder {
-    color: #8a8d91;
-}
-
 /* Icon navigation styling */
 nav ul {
     list-style: none;

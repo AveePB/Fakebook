@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-from fakebook.views import HeroPage
+from fakebook.views import HeroPage, SearchView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +27,7 @@ urlpatterns = [
     path('profiles/', include('apps.profiles.urls')),
     path('notifications/', include('apps.notifications.urls')),
     path('friends/', include('apps.friends.urls')),
+    path('search/', SearchView.as_view(), name='search'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
