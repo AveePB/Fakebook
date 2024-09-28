@@ -6,13 +6,14 @@
 {% endblock %}
 
 {% block settings_content %} 
-    <!-- Username Form -->
+    <!-- Email Form -->
     <div class="form-section">
         <h2>Update Email</h2>
-        <form id="username-form" class="form-container" action="/profiles/username/" method="POST" data-message-box="username-message-box" autocomplete="off">
-            <label for="username">Current Email: {{ user.username }}</label>
-            <input type="text" id="username" name="username" placeholder="{{ current_username }}" required>
-            <input type="submit" value="Update Username">
+        <form id="username-form" class="form-container" action="/profiles/email/" method="POST" data-message-box="username-message-box" autocomplete="off">
+            {% csrf_token %}
+            <label for="email">Current Email: {{ user.username }}</label>
+            <input type="text" id="username" name="email" placeholder="{{ user.username }}" required>
+            <input type="submit" value="Update Email">
         </form>
         <div id="username-message-box" class="message-box"></div>
     </div>
@@ -21,6 +22,7 @@
     <div class="form-section">
         <h2>Change Password</h2>
         <form id="password-form" class="form-container" action="/profiles/password/" method="POST" data-message-box="password-message-box" autocomplete="off">
+            {% csrf_token %}
             <label for="new-password">Current Password: encoded</label>
             <div class="password-wrapper">
                 <input type="password" id="new-password" name="password" required>

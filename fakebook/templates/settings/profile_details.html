@@ -1,0 +1,51 @@
+{% extends 'settings/settings_page.html' %}
+
+{% block settings_title %} Account Details {% endblock %}
+{% block subhead %}
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'settings/css/profile-details.css' %}">
+{% endblock %}
+
+{% block settings_content %} 
+    <!-- Bio Form -->
+    <div class="form-section">
+        <h2>Update Bio</h2>
+        <form id="bio-form" class="form-container" action="/profiles/bio/" method="POST" data-message-box="bio-message-box" autocomplete="off">
+            {% csrf_token %}
+            <label for="bio">Bio:</label>
+            <textarea name="bio" placeholder="{{ profile.bio }}" id="bio" required></textarea>
+            <div class="button-group">
+                <input type="submit" value="Update">
+            </div>
+        </form>
+
+        <div id="bio-message-box" class="message-box"></div>
+    </div>
+
+    <!-- First Name Form -->
+    <div class="form-section">
+        <h2>Update First Name</h2>
+        <form class="form-container" action="/profiles/first-name/" method="POST" data-message-box="first-name-message-box" autocomplete="off">
+            {% csrf_token %}
+            <label for="first-name">First Name:</label>
+            <input type="text" name="first_name" id="first_name" placeholder="{{ user.first_name }}" required>
+            <div class="button-group">
+                <input type="submit" value="Update">
+            </div>
+        </form>
+        <div id="first-name-message-box" class="message-box"></div>
+    </div>
+
+    <!-- Last Name Form -->
+    <div class="form-section">
+        <h2>Update Last Name</h2>
+        <form class="form-container" action="/profiles/last-name/" method="POST" data-message-box="last-name-message-box" autocomplete="off">
+            {% csrf_token %}
+            <label for="last-name">Last Name:</label>
+            <input type="text" name="last_name" id="last_name" placeholder="{{ user.last_name }}" required>
+            <div class="button-group">
+                <input type="submit" value="Update">
+            </div>
+        </form>
+        <div id="last-name-message-box" class="message-box"></div>
+    </div>
+{% endblock %}

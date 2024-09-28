@@ -4,8 +4,10 @@
   width: 80%; /* Adjust the width as needed */
   margin: 20px auto;
   margin-top: 50px;
+  max-height: 83vh;
+  overflow-y: auto;
+  height: 100%;
   border-radius: 15px;
-  overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

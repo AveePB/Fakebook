@@ -35,3 +35,20 @@ class AccountDetailsView(APIView):
             'user': request.user,
         })
 
+class ProfileDetailsView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        # Authentication check
+        if (request.user.is_anonymous):
+            return redirect('hero-page')
+
+        profile, created = Profile.objects.get_or_create(user=request.user)
+
+        return render(request, 'settings/profile_details.html', {
+            'current_user_uuid': profile.uuid, 
+            'current_user_avatar_url': profile.get_avatar_url(),
+            'user': request.user,
+            'profile': profile,
+        })
+

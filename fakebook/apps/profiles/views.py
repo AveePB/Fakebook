@@ -1,9 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth import update_session_auth_hash
 from rest_framework.views import Response, status
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.http import Http404
+from django.db import IntegrityError
 
 from apps.friends.models import Friendship
 from apps.profiles.models import Profile
@@ -11,6 +13,80 @@ from apps.profiles.forms import *
 import uuid
 
 # Create your views here.
+class EmailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post (self, request, *args, **kwargs):
+        form = EmailForm(request.POST)
+
+        if (form.is_valid()):
+            email = form.cleaned_data['email']
+            try:
+                request.user.username = email 
+                request.user.save(force_update=True)
+                
+            except IntegrityError:
+                return Response({'messsage': 'This email is already taken.'}, status.HTTP_409_CONFLICT)
+                
+            # Operation success
+            return Response({'message': 'Email successfully updated.'}, status.HTTP_200_OK)
+
+        # Invalid form
+        return Response({'message': form.errors.as_text()}, status.HTTP_400_BAD_REQUEST)        
+
+# Create your views here.
+class PasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post (self, request, *args, **kwargs):
+        form = PasswordForm(request.POST)
+
+        if (form.is_valid()):
+            password = form.cleaned_data['password']
+            request.user.password = password 
+            request.user.save(force_update=True)
+            update_session_auth_hash(request, request.user)
+                            
+            # Operation success
+            return Response({'message': 'Password successfully updated.'}, status.HTTP_200_OK)
+
+        # Invalid form
+        return Response({'message': form.errors.as_text()}, status.HTTP_400_BAD_REQUEST)        
+    
+class FirstNameView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post (self, request, *args, **kwargs):
+        form = FirstNameForm(request.POST)
+
+        if (form.is_valid()):
+            first_name = form.cleaned_data['first_name']
+            request.user.first_name = first_name
+            request.user.save(force_update=True)
+                
+            # Operation success
+            return Response({'message': 'First name successfully updated.'}, status.HTTP_200_OK)
+
+        # Invalid form
+        return Response({'message': form.errors.as_text()}, status.HTTP_400_BAD_REQUEST)        
+    
+class LastNameView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post (self, request, *args, **kwargs):
+        form = LastNameForm(request.POST)
+
+        if (form.is_valid()):
+            last_name = form.cleaned_data['last_name']
+            request.user.last_name = last_name
+            request.user.save(force_update=True)
+                
+            # Operation success
+            return Response({'message': 'Last name successfully updated.'}, status.HTTP_200_OK)
+
+        # Invalid form
+        return Response({'message': form.errors.as_text()}, status.HTTP_400_BAD_REQUEST)        
+
 class AvatarView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -102,7 +178,7 @@ class BioView(APIView):
             
             return Response({'message': 'Bio successfully updated.'}, status.HTTP_200_OK)
 
-        return Response({'message': form.errors.as_text()}, status.HTTP_400_BAD_REQUEST)        
+        return Response({'message': form.errors.as_text()}, status.HTTP_400_BAD_REQUEST)
 
 class ProfileView(APIView):
     permission_classes = [AllowAny]
