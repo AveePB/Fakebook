@@ -1,0 +1,36 @@
+{% extends 'bases/template.html' %}
+
+{% block title %}Fakebook - Settings{% endblock %}
+
+{% block head %} 
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'settings/css/styles.css' %}">
+    {% block subhead %}{% endblock %}
+{% endblock %}
+
+{% block body %} 
+    <div class="table-container">
+        <!-- Left Column (Menu) -->
+        <div class="left-column">
+            <div class="menu-wrapper">
+                <div class="menu-item"><a href="/settings/account-details/">Account Details</a></div>
+                <div class="menu-item"><a href="/settings/profile-details/">Profile Details</a></div>
+                <div class="menu-item"><a href="/settings/profile-images/">Profile Images</a></div>
+                
+                <!-- Blank space that stretches the remaining height -->
+                <div class="blank-space"></div>
+            </div>
+        </div>
+        
+        <!-- Right Column (Content) -->
+        <div class="right-column">
+            
+            <!-- Title Row -->
+            <div class="title-row">{% block settings_title %} {% endblock %}</div>
+            
+            <!-- Content Row -->
+            <div class="content-row">
+                {% block settings_content %} {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

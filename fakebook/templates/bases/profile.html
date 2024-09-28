@@ -15,7 +15,7 @@
 
                 <!-- Optional Edit Profile Button -->
                 {% if is_own %}
-                    <a href="#">
+                    <a href="{% url 'account-details-page' %}">
                         <button class="edit-btn">Edit Profile</button>
                     </a>
                 {% endif %}

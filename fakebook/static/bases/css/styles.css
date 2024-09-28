@@ -16,6 +16,10 @@ html, body {
 /* Make sure the main content expands to fill the available space */
 .main-content {
     flex: 1;
-    padding-top: 55px; /* Ensures content starts after the navbar */
+    padding-top: 30px; /* Ensures content starts after the navbar */
     overflow: hidden; /* Prevent any overflow issues */
+    background-image: url('../img/profile-page-bg.jpg'); /* Replace with your background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; /* Ensure no repeat */
 }
