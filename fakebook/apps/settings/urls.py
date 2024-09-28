@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.SettingsRedirectView.as_view()),
     path('account-details/', views.AccountDetailsView.as_view(), name='account-details-page'),
     path('profile-details/', views.ProfileDetailsView.as_view(), name='profile-details-page'),
+    path('profile-images/', views.ProfileImagesView.as_view(), name='profile-images-page'),
 ]

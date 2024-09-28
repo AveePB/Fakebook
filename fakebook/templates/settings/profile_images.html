@@ -1,0 +1,52 @@
+{% extends 'settings/settings_page.html' %}
+
+{% block settings_title %} Account Details {% endblock %}
+{% block subhead %}
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'settings/css/profile-images.css' %}">
+{% endblock %}
+
+{% block settings_content %} 
+    <!-- Profile preview -->
+    <div class="profile-preview">
+        <div class="background-container">
+            <img src="{{ profile.get_background_url }}" alt="Profile Background" class="background-image">
+        </div>
+        <div class="avatar-container">
+            <img src="{{ profile.get_avatar_url }}" alt="Profile Avatar" class="avatar-image">
+        </div>
+    </div>
+
+    <div class="settings-container">
+        <!-- Avatar Upload Form -->
+        <div class="form-section">
+            <h2>Upload Avatar</h2>
+            <form id="avatar-form" class="form-container" action="/profiles/avatar/" method="POST" enctype="multipart/form-data" data-message-box="avatar-message-box">
+                {% csrf_token %}
+                <label for="avatar">Select Avatar:</label>
+                <input type="file" id="avatar" name="file" accept="image/*" required>
+                <div class="button-group">
+                    <input type="submit" value="Upload Avatar">
+                    <button class="delete-btn" data-url="/profiles/avatar/" data-message-box="avatar-message-box">Delete</button>
+                </div>
+            </form>
+            <div id="avatar-message-box" class="message-box"></div>
+        </div>
+
+        <!-- Background Upload Form -->
+        <div class="form-section">
+            <h2>Upload Background</h2>
+            <form id="background-form" class="form-container" action="/profiles/background/" method="POST" enctype="multipart/form-data" data-message-box="background-message-box">
+                {% csrf_token %}
+                <label for="background">Select Background:</label>
+                <input type="file" id="background" name="file" accept="image/*" required>
+                <div class="button-group">
+                    <input type="submit" value="Upload Background">
+                    <button class="delete-btn" data-url="/profiles/background/" data-message-box="background-message-box">Delete</button>
+                </div>
+            </form>
+            <div id="background-message-box" class="message-box"></div>
+        </div>
+    </div>
+
+    {% load static %} <script src="{% static 'settings/js/delete_buttons.js' %}"></script>
+{% endblock %}

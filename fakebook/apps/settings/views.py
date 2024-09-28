@@ -52,3 +52,20 @@ class ProfileDetailsView(APIView):
             'profile': profile,
         })
 
+class ProfileImagesView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        # Authentication check
+        if (request.user.is_anonymous):
+            return redirect('hero-page')
+
+        profile, created = Profile.objects.get_or_create(user=request.user)
+
+        return render(request, 'settings/profile_images.html', {
+            'current_user_uuid': profile.uuid, 
+            'current_user_avatar_url': profile.get_avatar_url(),
+            'user': request.user,
+            'profile': profile,
+        })
+

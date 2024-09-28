@@ -1,0 +1,60 @@
+/* Container for the profile preview */
+.profile-preview {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Adjust this as needed */
+    height: 300px; /* Adjust the height for the background */
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f3f3f3;
+  }
+  
+  /* Background container and image */
+  .background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the background image fits the div */
+    z-index: 1;
+  }
+  
+  /* Avatar container and image */
+  .avatar-container {
+    position: absolute;
+    bottom: 90px; /* Slightly above the bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Center the avatar */
+    z-index: 2;
+  }
+  
+  .avatar-image {
+    width: 120px; /* Adjust size of the avatar */
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white; /* Adds a border around the avatar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 3; /* Ensure avatar is in front of the background */
+  }
+  
+  /* Ensure responsiveness */
+  @media (max-width: 768px) {
+    .profile-preview {
+        height: 200px; /* Reduce height for smaller screens */
+    }
+    
+    .avatar-image {
+        width: 100px;
+        height: 100px;
+    }
+  }
