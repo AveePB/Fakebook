@@ -1,6 +1,6 @@
 from apps.profiles.views import Profile
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.views import Response, status
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
@@ -9,6 +9,7 @@ from django.http import Http404
 
 from apps.profiles.models import Profile
 from apps.friends.models import Friendship
+from apps.notifications.models import Notification
 
 # Create your views here.
 class FriendsView(APIView):
@@ -36,6 +37,12 @@ class FriendsView(APIView):
             return Response({'message': 'You already know this person.'}, status.HTTP_409_CONFLICT)
 
         # Operation success
+        Notification(user=user_profile.user, content=f'You have a new friend ({request.user.first_name} {request.user.last_name}).'
+            ).save(force_insert=True)
+        
+        Notification(user=request.user, content=f'You have a new friend ({user_profile.user.first_name} {user_profile.user.last_name}).'
+            ).save(force_insert=True)
+        
         return Response({'message': 'Successfully met a new friend.'}, status.HTTP_201_CREATED)
     
     def delete(self, request, user_uuid):
@@ -56,6 +63,12 @@ class FriendsView(APIView):
         try:
             friendship = Friendship.objects.get(user1=request.user, user2=user_profile.user)
             friendship.delete()
+
+            Notification(user=user_profile.user, content=f'You lost a friend ({request.user.first_name} {request.user.last_name}).'
+                ).save(force_insert=True)
+        
+            Notification(user=request.user, content=f'You lost a friend ({user_profile.user.first_name} {user_profile.user.last_name}).'
+                ).save(force_insert=True)
         except:
             pass
 
@@ -63,6 +76,12 @@ class FriendsView(APIView):
         try:
             friendship = Friendship.objects.get(user1=user_profile.user, user2=request.user)
             friendship.delete()
+
+            Notification(user=user_profile.user, content=f'You lost a friend ({request.user.first_name} {request.user.last_name}).'
+                ).save(force_insert=True)
+        
+            Notification(user=request.user, content=f'You lost a friend ({user_profile.user.first_name} {user_profile.user.last_name}).'
+                ).save(force_insert=True)
         except:
             pass
         
