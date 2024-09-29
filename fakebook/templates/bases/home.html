@@ -12,66 +12,14 @@
         <div class="left-column">
             <h3>Friends</h3>
             <ul class="friend-list">
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>John Doe</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Jane Smith</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Alice Johnson</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Mark Williams</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Emma Brown</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>James Davis</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Sophia Wilson</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Oliver Martin</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Ava Thompson</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Lucas Garcia</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Mia Anderson</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Ethan Thomas</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Lily White</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Alexander Harris</span>
-                </li>
-                <li class="friend-item">
-                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
-                    <span>Emily Clark</span>
-                </li>
+                {% for user, profile in friends_data %}
+                    <li class="friend-item" url="/chats/open/{{ profile.uuid }}/">
+                        <img src="{{ profile.get_avatar_url }}" alt="Avatar" class="friend-avatar">
+                        <span>{{ user.first_name }} {{ user.last_name }}</span>
+                    </li>
+                {% empty %}
+                    No friends yet...
+                {% endfor %}
             </ul>
         </div>
 

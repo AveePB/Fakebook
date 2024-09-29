@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 
 from apps.authz.forms import RegisterForm, LoginForm
+from apps.profiles.models import Profile
 
 # Create your views here.
 class RegisterPage(APIView):
@@ -37,7 +38,10 @@ class RegisterPage(APIView):
             try:
                 created_user = User.objects.create_user(username, None, password, first_name=first_name, last_name=last_name)
                 login(request, created_user)
-
+                
+                profile = Profile(user=created_user)
+                profile.save(force_insert=True)
+                
                 # Operation success
                 return Response({'message': 'User has been created.'}, status.HTTP_201_CREATED)
             
