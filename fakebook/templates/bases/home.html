@@ -1,0 +1,155 @@
+{% extends 'bases/template.html' %}
+
+{% block title %}Fakebook - Profile Preview{% endblock %}
+
+{% block head %} 
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/home.css' %}">
+{% endblock %}
+
+{% block body %} 
+    <div class="chat-container">
+        <!-- Left Column: Friend List -->
+        <div class="left-column">
+            <h3>Friends</h3>
+            <ul class="friend-list">
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>John Doe</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Jane Smith</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Alice Johnson</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Mark Williams</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Emma Brown</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>James Davis</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Sophia Wilson</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Oliver Martin</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Ava Thompson</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Lucas Garcia</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Mia Anderson</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Ethan Thomas</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Lily White</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Alexander Harris</span>
+                </li>
+                <li class="friend-item">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="friend-avatar">
+                    <span>Emily Clark</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right Column: Chat Content -->
+        <div class="right-column">
+            <div class="chat-header">
+                <h3>Chat with John Doe</h3>
+            </div>
+            <div class="chat-content">
+                <!-- Left-aligned message -->
+                <div class="message message-left">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>Hey, how's it going?</p>
+                </div>
+                <!-- Right-aligned message -->
+                <div class="message message-right">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>Pretty good, thanks! What about you?</p>
+                </div>
+                <!-- Left-aligned message -->
+                <div class="message message-left">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>Just working on a project, trying to finish it before the deadline.</p>
+                </div>
+                <!-- Right-aligned message -->
+                <div class="message message-right">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>Sounds intense! Need any help?</p>
+                </div>
+                <!-- Left-aligned message -->
+                <div class="message message-left">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>I think I got it covered, but I appreciate the offer!</p>
+                </div>
+                <!-- Right-aligned message -->
+                <div class="message message-right">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>No problem. Let me know if you change your mind.</p>
+                </div>
+                <!-- More messages -->
+                <div class="message message-left">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>Will do! What are you up to today?</p>
+                </div>
+                <div class="message message-right">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>Just relaxing, catching up on some reading.</p>
+                </div>
+                <div class="message message-left">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>Nice! What are you reading?</p>
+                </div>
+                <div class="message message-right">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>It's a sci-fi book about space exploration. Really fascinating stuff!</p>
+                </div>
+                <div class="message message-left">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>That sounds awesome! I love a good space story.</p>
+                </div>
+                <div class="message message-right">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>Yeah, it's really well-written. You should check it out sometime.</p>
+                </div>
+                <div class="message message-left">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>I definitely will! Thanks for the recommendation.</p>
+                </div>
+                <div class="message message-right">
+                    <img src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                    <p>No problem. Always happy to share a good book!</p>
+                </div>
+            </div>
+            <!-- Chat Input -->
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button>Send</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -29,6 +29,7 @@ urlpatterns = [
     path('friends/', include('apps.friends.urls')),
     path('search/', SearchView.as_view(), name='search'),
     path('settings/', include('apps.settings.urls')),
+    path('chats/', include('apps.chats.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

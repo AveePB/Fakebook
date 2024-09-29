@@ -1,0 +1,166 @@
+/* General container styling */
+.chat-container {
+    display: flex;
+    width: 80%; /* Adjust the width as needed */
+    margin: 20px auto;
+    margin-top: 50px;
+    max-height: 83vh;
+    overflow-y: auto;
+    height: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+  
+/* Left Column: Friend List */
+.left-column {
+    flex: 1; /* Smaller fraction for the left column */
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-right: 2px solid #ddd;
+    overflow-y: auto;
+}
+  
+.left-column h3 {
+    text-align: center;
+}
+  
+.friend-list {
+    list-style-type: none;
+    padding: 0;
+}
+  
+.friend-item {
+    display: flex;
+    align-items: center; /* Align avatars and usernames vertically */
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.friend-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Make avatars rounded */
+    margin-right: 10px; /* Space between avatar and username */
+}
+  
+.friend-item span {
+    flex-grow: 1; /* Ensure the username stays aligned with the avatar */
+}
+  
+.friend-item:hover {
+    background-color: #0056b3;
+}
+  
+/* Right Column: Chat Content */
+.right-column {
+    flex: 3; /* Larger fraction for the right column */
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+}
+  
+.chat-header {
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+}
+  
+.chat-content {
+    flex-grow: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+  
+.message {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center; /* Align avatars and messages vertically */
+}
+  
+.message-left {
+    text-align: left;
+    flex-direction: row; /* Avatar on the left */
+}
+  
+.message-right {
+    text-align: right;
+    flex-direction: row-reverse; /* Avatar on the right */
+}
+  
+.message p {
+    display: inline-block; /* Ensure the message bubble only takes as much space as needed */
+    padding: 10px 15px;
+    border-radius: 20px;
+    background-color: #007bff; /* Left message color */
+    color: white;
+    max-width: 60%; /* Prevent the message bubble from being too wide */
+    word-wrap: break-word; /* Allow word wrapping to prevent overflow */
+    white-space: pre-wrap; /* Preserve spaces and line breaks */
+}
+
+/* Right-side message bubble color */
+.message-right p {
+    background-color: #0056b3;
+}
+
+/* Avatars for messages */
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Make avatars rounded */
+    margin: 0 10px; /* Space between avatar and message */
+}
+
+/* Additional margin for right column avatars */
+.message-right .message-avatar {
+    margin-left: 10px; /* Add space between avatar and message */
+}
+  
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+  
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+  
+.chat-input button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+
+/* Globally make all avatars rounded */
+img {
+    border-radius: 50%; /* Make all images (avatars) rounded */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chat-container {
+        flex-direction: column; /* Stack columns on small screens */
+    }
+  
+    .left-column {
+        border-right: none;
+        border-bottom: 2px solid #ddd;
+    }
+}
