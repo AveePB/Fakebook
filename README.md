@@ -75,6 +75,21 @@ Fakebook is a social media platform that mimics a mix of Facebook and Messenger.
    py manage.py migrate
    py manage.py runserver
 
+## Database Configuration
+To configure the database, open `fakebook/settings.py` and set the following MySQL credentials:
+
+   ```python
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.mysql',
+           'NAME': 'fakebook',
+           'USER': 'f4k3',
+           'PASSWORD': 'my password',
+           'HOST': 'localhost',  # or your database host
+           'PORT': '3306',       # default MySQL port
+       }
+   }
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
