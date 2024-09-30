@@ -1,0 +1,42 @@
+{% extends 'bases/template.html' %}
+
+{% block title %}Fakebook - Profile Preview{% endblock %}
+
+{% block head %} 
+    {% load static %} <link rel="stylesheet" type="text/css" href="{% static 'bases/css/home.css' %}">
+{% endblock %}
+
+{% block body %} 
+    <div class="chat-container">
+        <!-- Left Column: Friend List -->
+        <div class="left-column">
+            <h3>Friends</h3>
+            <ul class="friend-list">
+                {% for user, profile in friends_data %}
+                    <li class="friend-item" data-user-uuid="{{ profile.uuid }}">
+                        <img src="{{ profile.get_avatar_url }}" alt="Avatar" class="friend-avatar">
+                        <span>{{ user.first_name }} {{ user.last_name }}</span>
+                    </li>
+                {% empty %}
+                    No friends yet...
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Right Column: Chat Content -->
+        <div class="right-column">
+            <div class="chat-header">
+                <h3>No chat selected yet</h3>
+            </div>
+            <div class="chat-content"></div>
+            
+            <!-- Chat Input -->
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                {% csrf_token %}
+                <button>Send</button>
+            </div>
+        </div>
+    </div>
+    {% load static %} <script src="{% static 'bases/js/home.js' %}"></script>
+{% endblock %}

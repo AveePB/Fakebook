@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'apps.notifications',
     'apps.friends',
     'apps.settings',
+    'apps.chats',
 ]
 
 MIDDLEWARE = [
