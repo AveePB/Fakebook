@@ -45,4 +45,3 @@ Fakebook is a social media platform that mimics a mix of Facebook and Messenger.
    ```bash
    git clone https://github.com/yourusername/fakebook.git
    cd fakebook
-  ```
