@@ -70,9 +70,14 @@ Fakebook is a social media platform that mimics a mix of Facebook and Messenger.
 1. Clone the repository:
    ```bash
    git clone https://github.com/AveePB/fakebook.git
-   cd fakebook
-   venv\Scripts\activate
-   cd fakebook
+   
+2. Install python libs
+   ```bash
+   pip install django
+   pip install mysqlclient
+
+3. Set up project
+   ```bash
    py manage.py makemigrations
    py manage.py migrate
    py manage.py runserver
