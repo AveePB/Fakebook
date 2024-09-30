@@ -69,7 +69,7 @@ Fakebook is a social media platform that mimics a mix of Facebook and Messenger.
 ### Setup Instructions
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/fakebook.git
+   git clone https://github.com/AveePB/fakebook.git
    cd fakebook
 
 ## License
