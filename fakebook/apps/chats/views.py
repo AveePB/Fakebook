@@ -11,6 +11,7 @@ from apps.profiles.views import Profile
 from apps.friends.views import Friendship
 from apps.chats.forms import MessageForm
 from apps.chats.models import Message
+from apps.notifications.models import Notification
 
 # Create your views here.
 class HomePage(APIView):
@@ -52,9 +53,9 @@ class ChatView(APIView):
             recipient_profile = Profile.objects.get(uuid=user_uuid)
         
         except ValidationError:
-            return Http404()
+            raise Http404()
         except Profile.DoesNotExist:
-            return Http404()
+            raise Http404()
         
         # Check if friends
         if (not (Friendship.objects.filter(user1=recipient_profile.user, user2=request.user).exists() or 
@@ -70,18 +71,18 @@ class ChatView(APIView):
             'recipient_avatar_url': recipient_profile.get_avatar_url(),
             'author_messages': author_messages,
             'recipient_messages': recipient_messages,    
+            'chat_name': f'Chat with {recipient_profile.user.first_name} {recipient_profile.user.last_name}',
         }, status.HTTP_200_OK)
 
     def post(self, request, user_uuid):
         # Fetch user profiles
         try:
-            author_profile, created = Profile.objects.get_or_create(user=request.user)        
             recipient_profile = Profile.objects.get(uuid=user_uuid)
         
         except ValidationError:
-            return Http404()
+            raise Http404()
         except Profile.DoesNotExist:
-            return Http404()
+            raise Http404()
         
         # Check if friends
         if (not (Friendship.objects.filter(user1=recipient_profile.user, user2=request.user).exists() or 
@@ -96,6 +97,11 @@ class ChatView(APIView):
             # Save message
             new_msg = Message(content=msg_content, author=request.user, recipient=recipient_profile.user)
             new_msg.save(True)
+
+            # Send notification
+            new_notification = Notification(user=recipient_profile.user, content=f"{request.user.first_name} {request.user.last_name} has messaged you!")
+            new_notification.save(force_insert=True)
+
             return Response(None, status.HTTP_204_NO_CONTENT)
 
         # Operation failed

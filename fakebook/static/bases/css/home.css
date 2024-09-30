@@ -119,9 +119,10 @@
 
 /* Additional margin for right column avatars */
 .message-right .message-avatar {
-    margin-left: 10px; /* Add space between avatar and message */
+    margin-left: 5px; /* Add space between avatar and message */
 }
-  
+
+
 .chat-input {
     display: flex;
     gap: 10px;
@@ -163,4 +164,11 @@ img {
         border-right: none;
         border-bottom: 2px solid #ddd;
     }
+}
+
+.empty-chat {
+    text-align: center; /* Center the text */
+    color: #999; /* Light grey color for the text */
+    margin-top: 20px; /* Space above the message */
+    font-size: 1.2em; /* Increase font size for visibility */
 }
