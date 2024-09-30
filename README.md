@@ -38,7 +38,7 @@ Fakebook is a social media platform that mimics a mix of Facebook and Messenger.
 ### Prerequisites
 - Python 3.x
 - Django
-- PostgreSQL
+- MySQL
 
 ### Setup Instructions
 1. Clone the repository:
